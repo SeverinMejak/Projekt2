@@ -1,5 +1,7 @@
 package projekt2;
 
+import java.io.IOException;
+
 //import javax.sound.*;
 import javax.sound.midi.Instrument;
 import javax.sound.midi.MidiChannel;
@@ -14,7 +16,12 @@ public class Predvajaj {
   static int note2 = 72;
   static int timbre = 0;
   static int force = 25;
-  public static void zaigraj(int[][] sez) throws InterruptedException {        
+  static Synthesizer synth;
+  public static void zaigraj(String name) throws InterruptedException {   
+	  int[][] sez;
+	try {
+		sez = NaloziSliko.extractBytes(name);
+	
       Synthesizer synth = null;
       try {
           synth = MidiSystem.getSynthesizer();
@@ -125,8 +132,13 @@ public class Predvajaj {
       
       synth.close();
 
-  } 
-} 
-
-
-
+	} catch (IOException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+}
+public static void prekini() {
+	// TODO Auto-generated method stub
+	synth.close();
+}
+}

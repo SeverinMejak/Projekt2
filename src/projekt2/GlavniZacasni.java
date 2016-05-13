@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import java.awt.Container;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -22,12 +23,15 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class GlavniZacasni extends JFrame implements ActionListener{
 	private JLabel label;
 	private JMenuItem openItem;
 	private JMenuItem exitItem;
 	private JMenuItem predvajaj;
+	private JMenuItem predvajaj1;
 	private String datoteka;
+	
 	private JPanel zaslon;
 	private JMenuItem prekini;
 	
@@ -41,11 +45,15 @@ public class GlavniZacasni extends JFrame implements ActionListener{
 	    m.add(openItem);
 	    predvajaj = new JMenuItem("Predvajaj");
 	    predvajaj.addActionListener(this);
+	    predvajaj1 = new JMenuItem("Predvajaj zvezno");
+	    predvajaj1.addActionListener(this);
 	    prekini = new JMenuItem("Prekini");
 	    prekini.addActionListener(this);
 	    JPanel zaslon = new JPanel();
 	    zaslon.add(predvajaj);
+	    zaslon.add(predvajaj1);
 	    m.add(predvajaj);
+	    m.add(predvajaj1);
 	    m.add(prekini);
 	    exitItem = new JMenuItem("Exit");
 	    exitItem.addActionListener(this);
@@ -75,7 +83,7 @@ public class GlavniZacasni extends JFrame implements ActionListener{
 		        datoteka = chooser.getSelectedFile().getAbsolutePath();
 		        System.out.print(datoteka);
 				try {
-					Image.slika(datoteka);
+					Slika.slika(datoteka);
 					//Predvajaj.zaigraj(name);
 				} catch (IOException e1) {
 				}
@@ -88,7 +96,12 @@ public class GlavniZacasni extends JFrame implements ActionListener{
 		}
 		else if (source == predvajaj){
 			try {
-				Predvajaj.zaigraj(datoteka);
+				Predvajaj.zaigraj(datoteka, 0);
+			} catch (InterruptedException e) {
+			}
+		} else if (source == predvajaj1){
+			try {
+				Predvajaj.zaigraj(datoteka, 1);
 			} catch (InterruptedException e) {
 			}
 		}

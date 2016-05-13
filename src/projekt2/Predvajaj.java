@@ -17,10 +17,10 @@ public class Predvajaj {
   static int timbre = 0;
   static int force = 25;
   static Synthesizer synth;
-  public static void zaigraj(String name) throws InterruptedException {   
+  public static void zaigraj(String name, int n) throws InterruptedException {   
 	  int[][] sez;
 	try {
-		sez = NaloziSliko.extractBytes(name);
+		sez = NaloziSliko.pretvori(name, n);
 	
       Synthesizer synth = null;
       try {
@@ -68,6 +68,8 @@ public class Predvajaj {
       
       for (int[] i : sez){
     	  
+    	  //System.out.println(i[0]);
+    	  
     	  j1 =   (i[0]*100)/255 + 10;
     	  k1 = (i[1]*100)/255 + 10;
     	  l1 = (i[2]*100)/255 + 10;
@@ -95,7 +97,7 @@ public class Predvajaj {
     		  
     	  } else {
     		  a3 = false;
-    		  mc3[6].noteOff(l1, force + 60);
+    		  mc3[6].noteOff(l1, force + 45);
     		  
     	  }
     	  
@@ -115,7 +117,7 @@ public class Predvajaj {
     		  mc2[5].noteOn(k1, force + 90);
     	  }
     	  if (!a3){
-    		  mc3[6].noteOn(l1, force + 60);
+    		  mc3[6].noteOn(l1, force + 45);
     	  }
     	  
     	  Thread.sleep(200);

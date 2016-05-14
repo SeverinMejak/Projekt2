@@ -12,6 +12,8 @@ import javax.imageio.ImageIO;
 public class NaloziSliko {
 	
 	public static int[][] pretvori (String ImageName, int m) throws IOException {
+		
+		
 		 
 		File imgPath = new File(ImageName);
 		BufferedImage slika = ImageIO.read(imgPath);
@@ -22,7 +24,7 @@ public class NaloziSliko {
 		
 		
 		
-		System.out.println(w + h);
+		
 		
 		int[][] sez1 = new int[w * h][4];
 		

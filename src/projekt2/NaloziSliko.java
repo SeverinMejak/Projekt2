@@ -24,8 +24,6 @@ public class NaloziSliko {
 		
 		
 		
-		
-		
 		int[][] sez1 = new int[w * h][4];
 		
 		int[] sez = slika.getRGB(0, 0, slika.getWidth(), slika.getHeight(),null, 0, slika.getWidth());

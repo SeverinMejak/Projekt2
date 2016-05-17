@@ -28,6 +28,7 @@ public class Platno extends JFrame implements ActionListener{
 	private JButton prekini;
 	private JButton pavza;
 	private JButton play;
+	private static JButton barve;
 	private static JButton xy;
 	
 	public Platno() {
@@ -105,6 +106,9 @@ public class Platno extends JFrame implements ActionListener{
 	      } catch (IOException ex) {
 	      }
 	    
+	    barve = new JButton();
+	    zaslon.add(barve);
+	    
 	    xy = new JButton();
 	    zaslon.add(xy);
 	    
@@ -113,9 +117,14 @@ public class Platno extends JFrame implements ActionListener{
 	    spremeniIkono("/disk.png");
 	}
 	
-	public static void nastaviXY (int a, int b){
-		xy.setText(a+" "+b);
+	public static void nastaviBarve (int a, int b, int c){
+		barve.setText("Rdeca:" + a + ", " + "Zelena:" +  b + ", " + "Modra:" + c);
 	}
+	
+	public static void nastaviXY (int a, int b){
+		xy.setText("X:" + a + ", " + "Y:" +  b);
+	}
+	
 	public void spremeniIkono(String datoteka){
 		//Spremeni ikono okvira
 		try {

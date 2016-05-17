@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 @SuppressWarnings("serial")
 public class GlavniZacasni extends JFrame {
 	public static void main(String[] args) throws IOException, InterruptedException {
-		JFrame frame = new Platno();
+		JFrame frame = new VecjePlatno();
 		frame.pack();
 	    frame.setVisible(true);
 	}

@@ -31,12 +31,14 @@ public class Platno extends JFrame implements ActionListener{
 	
 	public Platno() {
 		super();
-		this.setPreferredSize(new Dimension(400, 400));
+		this.setPreferredSize(new Dimension(450, 400));
 		this.setBackground(Color.white);
 		setTitle("Muzika");
 		
-		setLayout(new GridLayout(1, 2));
+		setLayout(new GridLayout(1, 6));
 	    
+		//Velikost gumba
+		int VG = 25;
 	    zaslon = new Slika();
 	    
 	    openItem = new JButton();
@@ -44,7 +46,7 @@ public class Platno extends JFrame implements ActionListener{
 	    
 	    try {
 	        Image img = ImageIO.read(getClass().getResource("/Open-icon.png"));
-	        Image newimg = img.getScaledInstance( 20, 20,  java.awt.Image.SCALE_SMOOTH ) ;
+	        Image newimg = img.getScaledInstance( VG, VG,  java.awt.Image.SCALE_SMOOTH ) ;
 	        openItem.setIcon(new ImageIcon(newimg));
 	      } catch (IOException ex) {
 	      }
@@ -55,7 +57,7 @@ public class Platno extends JFrame implements ActionListener{
 	    predvajaj.addActionListener(this);
 	    try {
 	        Image img = ImageIO.read(getClass().getResource("/lines.jpg"));
-	        Image newimg = img.getScaledInstance( 20, 20,  java.awt.Image.SCALE_SMOOTH ) ;
+	        Image newimg = img.getScaledInstance( VG, VG,  java.awt.Image.SCALE_SMOOTH ) ;
 	        predvajaj.setIcon(new ImageIcon(newimg));
 	      } catch (IOException ex) {
 	      }
@@ -67,7 +69,7 @@ public class Platno extends JFrame implements ActionListener{
 	    zaslon.add(predvajaj1);
 	    try {
 	        Image img = ImageIO.read(getClass().getResource("/linesV.jpg"));
-	        Image newimg = img.getScaledInstance( 20, 20,  java.awt.Image.SCALE_SMOOTH ) ;
+	        Image newimg = img.getScaledInstance( VG, VG,  java.awt.Image.SCALE_SMOOTH ) ;
 	        predvajaj1.setIcon(new ImageIcon(newimg));
 	      } catch (IOException ex) {
 	      }
@@ -77,7 +79,7 @@ public class Platno extends JFrame implements ActionListener{
 	    zaslon.add(play);
 	    try {
 	        Image img = ImageIO.read(getClass().getResource("/play.png"));
-	        Image newimg = img.getScaledInstance( 20, 20,  java.awt.Image.SCALE_SMOOTH ) ;
+	        Image newimg = img.getScaledInstance( VG, VG,  java.awt.Image.SCALE_SMOOTH ) ;
 	        play.setIcon(new ImageIcon(newimg));
 	      } catch (IOException ex) {
 	      }
@@ -87,7 +89,7 @@ public class Platno extends JFrame implements ActionListener{
 	    zaslon.add(prekini);
 	    try {
 	        Image img = ImageIO.read(getClass().getResource("/stop.png"));
-	        Image newimg = img.getScaledInstance( 20, 20,  java.awt.Image.SCALE_SMOOTH ) ;
+	        Image newimg = img.getScaledInstance( VG, VG,  java.awt.Image.SCALE_SMOOTH ) ;
 	        prekini.setIcon(new ImageIcon(newimg));
 	      } catch (IOException ex) {
 	      }
@@ -97,13 +99,26 @@ public class Platno extends JFrame implements ActionListener{
 	    zaslon.add(pavza);
 	    try {
 	        Image img = ImageIO.read(getClass().getResource("/pause.png"));
-	        Image newimg = img.getScaledInstance( 20, 20,  java.awt.Image.SCALE_SMOOTH ) ;
+	        Image newimg = img.getScaledInstance( VG, VG,  java.awt.Image.SCALE_SMOOTH ) ;
 	        pavza.setIcon(new ImageIcon(newimg));
 	      } catch (IOException ex) {
 	      }
 	    
 	    add(zaslon); 
 	    
+	    spremeniIkono("/disk.png");
+	}
+	
+
+	public void spremeniIkono(String datoteka){
+		//Spremeni ikono okvira
+		try {
+	    	Image slikica = ImageIO.read(getClass().getResource(datoteka));
+	        setIconImage(slikica.getScaledInstance( 60, 60,  java.awt.Image.SCALE_SMOOTH ));
+	    }
+	    catch (IOException exc) {
+	        exc.printStackTrace();
+	    }
 	}
 	@Override
 	public void actionPerformed(ActionEvent ex) {
@@ -117,8 +132,8 @@ public class Platno extends JFrame implements ActionListener{
 		        System.out.print(datoteka);
 				try {
 					zaslon.setSlika(datoteka);
-					setSize(ImageIO.read(new File(datoteka)).getHeight(), ImageIO.read(new File(datoteka)).getWidth());
-					
+					setSize(ImageIO.read(new File(datoteka)).getWidth(), ImageIO.read(new File(datoteka)).getHeight());
+					spremeniIkono("/Open-icon.png");
 				} catch (IOException e1) {
 				}
 				
@@ -129,21 +144,26 @@ public class Platno extends JFrame implements ActionListener{
 
 		}
 		else if (source == predvajaj){
+			spremeniIkono("/play.png");
 			try {
 				Predvajaj.zaigraj(datoteka, 0);
 			} catch (InterruptedException e) {
 			}
 		} else if (source == predvajaj1){
+			spremeniIkono("/play.png");
 			try {
 				Predvajaj.zaigraj(datoteka, 1);
 			} catch (InterruptedException e) {
 			}
 		}
 		else if (source == prekini){
+			spremeniIkono("/stop.png");
 			Predvajaj.prekini();
 		} else if (source == pavza){
+			spremeniIkono("/pause.png");
 			Predvajaj.pavza();
 		} else if (source == play){
+			spremeniIkono("/play.png");
 			Predvajaj.play();
 		}
 	}

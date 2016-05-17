@@ -23,7 +23,7 @@ public class VecjePlatno extends JFrame implements ActionListener{
 	
 	VecjePlatno(){
 		super();
-		this.setPreferredSize(new Dimension(450, 400));
+		this.setPreferredSize(new Dimension(450, 250));
 		this.setBackground(Color.white);
 		setTitle("MUZIKA");
 		
@@ -33,21 +33,44 @@ public class VecjePlatno extends JFrame implements ActionListener{
 	    openItem.addActionListener(this);
 	    
 	    try {
-	        Image img = ImageIO.read(getClass().getResource("/Open-icon.png"));
-	        Image newimg = img.getScaledInstance( 30, 30,  java.awt.Image.SCALE_SMOOTH ) ;
+	        Image img = ImageIO.read(getClass().getResource("/add.png"));
+	        Image newimg = img.getScaledInstance( 150, 150,  java.awt.Image.SCALE_SMOOTH ) ;
 	        openItem.setIcon(new ImageIcon(newimg));
 	      } catch (IOException ex) {
 	      }
 	    slika.add(openItem);
+	    
+	    exitItem = new JButton();
+	    exitItem.addActionListener(this);
+	    try {
+	        Image img = ImageIO.read(getClass().getResource("/exit.png"));
+	        Image newimg = img.getScaledInstance( 150, 150,  java.awt.Image.SCALE_SMOOTH ) ;
+	        exitItem.setIcon(new ImageIcon(newimg));
+	      } catch (IOException ex) {
+	      }
+	    slika.add(exitItem);
+	    
+	    try {
+	    	Image slikica = ImageIO.read(getClass().getResource("/disk.png"));
+	        setIconImage(slikica.getScaledInstance( 60, 60,  java.awt.Image.SCALE_SMOOTH ));
+	    }
+	    catch (IOException exc) {
+	        exc.printStackTrace();
+	    }
+	    
 	    add(slika);
 	}
 	@Override
 	public void actionPerformed(ActionEvent ex) {
 		Object source = ex.getSource();
 		if (source == openItem) {
+			JFrame.setDefaultLookAndFeelDecorated(true);
 			JFrame frame = new Platno();
 			frame.pack();
 		    frame.setVisible(true);
+		}
+		else if (source == exitItem){
+			System.exit(0);
 		}
 	}
 }

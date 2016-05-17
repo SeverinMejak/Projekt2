@@ -92,6 +92,7 @@ public static void igraj(String name, int n) throws InterruptedException {
 			 boolean a3;
 	     
 			 for (int[] i : sez){
+				 Platno.nastaviXY(i[0],i[1]);
 				 
 				 mc4[3].allNotesOff();
 				 

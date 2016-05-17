@@ -69,12 +69,13 @@ public static void igraj(String name, int n) throws InterruptedException {
 	     
 			 MidiChannel[] mc2 = synth.getChannels();
 			 MidiChannel[] mc3 = synth.getChannels();
-	//      MidiChannel[] mc4 = synth.getChannels();
+			 MidiChannel[] mc4 = synth.getChannels();
 	//      MidiChannel[] mc5 = synth.getChannels();
 	     
 			 mc[4].programChange(0,34);
 			 mc2[5].programChange(0, 1);
-			 mc3[6].programChange(0,19);
+			 mc3[6].programChange(0,43);
+			 mc4[3].programChange(0, 113);
 	     
 			 int j1 = 0;
 	     
@@ -92,12 +93,14 @@ public static void igraj(String name, int n) throws InterruptedException {
 	     
 			 for (int[] i : sez){
 				 
+				 mc4[3].allNotesOff();
+				 
 				if (prekinitev){
 					 break;
 				 } else if (pavza){
-					 mc[4].noteOff(j2 , force + 50);
-					 mc2[5].noteOff(k2, force + 50);
-					 mc3[6].noteOff(l2, force );
+					 mc[4].noteOff(j2 , force + 90);
+					 mc2[5].noteOff(k2, force + 90);
+					 mc3[6].noteOff(l2, force +  60);
 					 pavza = false;
 					 while (!play){
 						 Thread.sleep(200);
@@ -109,16 +112,16 @@ public static void igraj(String name, int n) throws InterruptedException {
 				 
 				 
 				 
-		   	 j1 =   (i[0]*100)/255 + 10;
-		   	 k1 = (i[1]*100)/255 + 10;
-		   	 l1 = (i[2]*100)/255 + 10;
+		   	 j1 =   (i[0]*80)/255 + 20;
+		   	 k1 = (i[1]*80)/255 + 20;
+		   	 l1 = (i[2]*80)/255 + 20;
 		   	 
 		   	 if (j1 == j2){
 		   		 a1 = true;
 		   		 
 		   	 } else{
 		   		 a1 = false;
-		   		 mc[4].noteOff(j2 , force + 50);
+		   		 mc[4].noteOff(j2 , force + 90);
 		   		 
 		   	 }
 		   	 
@@ -127,7 +130,7 @@ public static void igraj(String name, int n) throws InterruptedException {
 		   		 
 		   	 } else {
 		   		 a2 = false;
-		   		 mc2[5].noteOff(k2, force + 50);
+		   		 mc2[5].noteOff(k2, force + 90);
 		   	 }
 		   	 
 		   	 if (l1 == l2){
@@ -145,15 +148,23 @@ public static void igraj(String name, int n) throws InterruptedException {
 		   	 
 		   	 if (!a1){
 		   		 mc[4].noteOn(j1, force + 90);
+		   	 } else {
+		   		 mc4[3].noteOn(j1%12 + 72, force + 80);
 		   	 }
 		   	 if (!a2){
 		   		 mc2[5].noteOn(k1, force + 90);
+		   		 
+		   	 } else {
+		   		mc4[3].noteOn(k1%12 + 72, force + 80);
 		   	 }
 		   	 if (!a3){
-		   		 mc3[6].noteOn(l1, force + 45);
+		   		 mc3[6].noteOn(l1, force + 60);
+		   		 
+		   	 } else {
+		   		mc4[3].noteOn(l1%12 + 72, force + 80);
 		   	 }
 		   	 
-		   	 Thread.sleep(200);
+		   	 Thread.sleep(2000);
 	   
 			 }
 	     

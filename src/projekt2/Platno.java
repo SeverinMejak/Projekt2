@@ -4,8 +4,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -15,9 +18,14 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButtonMenuItem;
 
 @SuppressWarnings("serial")
-public class Platno extends JFrame implements ActionListener{
+public class Platno extends JFrame implements ActionListener, MouseListener {
 	JLabel label;
 	private JButton openItem;
 	private JButton exitItem;
@@ -28,12 +36,20 @@ public class Platno extends JFrame implements ActionListener{
 	private JButton prekini;
 	private JButton pavza;
 	private JButton play;
+	private JRadioButtonMenuItem sam;
+	private boolean aliJeSam;
 	private static JButton barve;
 	private static JButton xy;
+	private int zacetnaVisina;
+	private int zacetnaSirina;
+	private JMenuItem openAction;
+	private JMenuItem hitrost;
 	
 	public Platno() {
 		super();
-		this.setPreferredSize(new Dimension(450, 400));
+		zacetnaVisina = 450;
+		zacetnaSirina = 400;
+		this.setPreferredSize(new Dimension(zacetnaVisina, zacetnaSirina));
 		this.setBackground(Color.white);
 		setTitle("Muzika");
 		
@@ -64,11 +80,13 @@ public class Platno extends JFrame implements ActionListener{
 	      } catch (IOException ex) {
 	      }
 	    zaslon.add(predvajaj);
+	    predvajaj.setVisible(false);
 	    
 	    //"Predvajaj po stolpcih"
 	    predvajaj1 = new JButton();
 	    predvajaj1.addActionListener(this);
 	    zaslon.add(predvajaj1);
+	    predvajaj1.setVisible(false);
 	    try {
 	        Image img = ImageIO.read(getClass().getResource("/linesV.jpg"));
 	        Image newimg = img.getScaledInstance( VG, VG,  java.awt.Image.SCALE_SMOOTH ) ;
@@ -76,9 +94,12 @@ public class Platno extends JFrame implements ActionListener{
 	      } catch (IOException ex) {
 	      }
 	    
+	    
+	    
 	    play = new JButton();
 	    play.addActionListener(this);
 	    zaslon.add(play);
+	    play.setVisible(false);
 	    try {
 	        Image img = ImageIO.read(getClass().getResource("/play.png"));
 	        Image newimg = img.getScaledInstance( VG, VG,  java.awt.Image.SCALE_SMOOTH ) ;
@@ -89,6 +110,7 @@ public class Platno extends JFrame implements ActionListener{
 	    prekini = new JButton();
 	    prekini.addActionListener(this);
 	    zaslon.add(prekini);
+	    prekini.setVisible(false);
 	    try {
 	        Image img = ImageIO.read(getClass().getResource("/stop.png"));
 	        Image newimg = img.getScaledInstance( VG, VG,  java.awt.Image.SCALE_SMOOTH ) ;
@@ -99,6 +121,8 @@ public class Platno extends JFrame implements ActionListener{
 	    pavza = new JButton();
 	    pavza.addActionListener(this);
 	    zaslon.add(pavza);
+	    pavza.setVisible(false);
+	 
 	    try {
 	        Image img = ImageIO.read(getClass().getResource("/pause.png"));
 	        Image newimg = img.getScaledInstance( VG, VG,  java.awt.Image.SCALE_SMOOTH ) ;
@@ -108,13 +132,51 @@ public class Platno extends JFrame implements ActionListener{
 	    
 	    barve = new JButton();
 	    zaslon.add(barve);
+	    barve.setVisible(false);
 	    
 	    xy = new JButton();
 	    zaslon.add(xy);
+	    xy.setVisible(false);
 	    
+	    
+	    
+	    
+	    //ustvari menu
+	    JMenuBar menuBar = new JMenuBar();
+	    setJMenuBar(menuBar);
+	    
+	    JMenu fileMenu = new JMenu("Datoteka");
+        JMenu editMenu = new JMenu("Nastavitve");
+        menuBar.add(fileMenu);
+        menuBar.add(editMenu);
+        
+        openAction = new JMenuItem("Open");
+        openAction.addActionListener(this);
+        JMenuItem exitAction = new JMenuItem("Exit");
+        hitrost = new JMenuItem("Hitrost");
+        hitrost.addActionListener(this);
+        JMenuItem instr = new JMenuItem("Instrumenti");
+	    
+        fileMenu.add(openAction);
+        fileMenu.add(exitAction);
+        editMenu.add(hitrost);
+        editMenu.add(instr);
+        
+        //JCheckBoxMenuItem checkAction = new JCheckBoxMenuItem("Check Action");
+        sam = new JRadioButtonMenuItem(
+                "Igraj sam");
+        sam.addActionListener(this);
+        sam.setVisible(false);
+        
+        editMenu.add(sam);
+        
+        
 	    add(zaslon); 
 	    
 	    spremeniIkono("/disk.png");
+	    aliJeSam = false;
+	    
+	    this.addMouseListener(this);
 	}
 	
 	public static void nastaviBarve (int a, int b, int c){
@@ -135,10 +197,37 @@ public class Platno extends JFrame implements ActionListener{
 	        exc.printStackTrace();
 	    }
 	}
+	
+	public void podajhitrost(){
+		boolean inputAccepted = false;
+		while(!inputAccepted) {
+			
+		  try {
+			String beseda =   JOptionPane.showInputDialog("Doloèi èas med dvema zvokoma v milisekundah:");
+			if (beseda.equalsIgnoreCase("")){
+				inputAccepted = true;
+			}
+		    int hitr = Integer.parseInt(beseda);
+		    System.out.println(hitr);
+		    
+		    if (hitr <= 0){
+
+		    } else{
+		    	inputAccepted = true;
+			      Predvajaj.spremeniHitrost(hitr);
+		    }
+		  } catch(NumberFormatException e) {
+			  
+		  }
+		
+		  
+	}
+	}
 	@Override
 	public void actionPerformed(ActionEvent ex) {
 		Object source = ex.getSource();
-		if (source == openItem) {
+		if (source == openItem || source == openAction) {
+			
 		      JFileChooser chooser = new JFileChooser();
 		      chooser.setCurrentDirectory(new File("."));
 		      int r = chooser.showOpenDialog(this);
@@ -148,40 +237,133 @@ public class Platno extends JFrame implements ActionListener{
 				try {
 					zaslon.setSlika(datoteka);
 					setTitle(datoteka);
-					setSize(ImageIO.read(new File(datoteka)).getWidth(), ImageIO.read(new File(datoteka)).getHeight());
+					zacetnaVisina = ImageIO.read(new File(datoteka)).getHeight();
+					zacetnaSirina = ImageIO.read(new File(datoteka)).getWidth();
+					setSize(zacetnaSirina, zacetnaVisina);
 					spremeniIkono("/Open-icon.png");
 				} catch (IOException e1) {
 				}
+				openItem.setVisible(false);
+				predvajaj.setVisible(true);
+				predvajaj1.setVisible(true);
+				sam.setVisible(true);
 				
 				
 		    } else if (source == exitItem){
 		      System.exit(0);
-		  }
-
+		  }	
+		      
 		}
 		else if (source == predvajaj){
 			spremeniIkono("/play.png");
+			
 			try {
-				Predvajaj.zaigraj(datoteka, 0);
+				Predvajaj.zaigraj(datoteka, 0, zacetnaSirina, zacetnaVisina);
 			} catch (InterruptedException e) {
 			}
+			predvajaj.setVisible(false);
+			predvajaj1.setVisible(false);
+			play.setVisible(true);
+			pavza.setVisible(true);
+			prekini.setVisible(true);
+			sam.setVisible(false);
+			xy.setVisible(true);
+			barve.setVisible(true);
 		} else if (source == predvajaj1){
 			spremeniIkono("/play.png");
+			
 			try {
-				Predvajaj.zaigraj(datoteka, 1);
+				Predvajaj.zaigraj(datoteka, 1, zacetnaSirina, zacetnaVisina);
 			} catch (InterruptedException e) {
 			}
+			predvajaj.setVisible(false);
+			predvajaj1.setVisible(false);
+			play.setVisible(true);
+			pavza.setVisible(true);
+			prekini.setVisible(true);
+			sam.setVisible(false);
+			xy.setVisible(true);
+			barve.setVisible(true);
 		}
 		else if (source == prekini){
 			spremeniIkono("/stop.png");
 			Predvajaj.prekini();
+			sam.setVisible(true);
+			predvajaj.setVisible(true);
+			predvajaj1.setVisible(true);
+			play.setVisible(false);
+			pavza.setVisible(false);
+			prekini.setVisible(false);
+			xy.setVisible(false);
+			barve.setVisible(false);
+			
 		} else if (source == pavza){
 			spremeniIkono("/pause.png");
 			Predvajaj.pavza();
+			sam.setVisible(true);
 		} else if (source == play){
 			spremeniIkono("/play.png");
 			Predvajaj.play();
+			sam.setVisible(false);
+		} else if (source == sam){
+			spremeniIkono("/play.png");
+			Predvajaj.samcat();
+			aliJeSam = !aliJeSam;
+			try {
+				Predvajaj.zaigraj(datoteka, 2, zacetnaSirina, zacetnaVisina);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			predvajaj.setVisible(!aliJeSam);
+			predvajaj1.setVisible(!aliJeSam);
+		} else if (source == hitrost) {
+			podajhitrost();
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		System.out.println(aliJeSam);
+		
+		if (aliJeSam){
+			int u = e.getX();
+			int v = e.getY();
+
+			Rectangle r = this.getBounds();
+			int h = r.height;
+			int w = r.width;
+
+			try {
+				Predvajaj.poklikaj((u * zacetnaSirina)/w, (v * zacetnaVisina)/h);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

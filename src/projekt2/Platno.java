@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.List;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +12,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -18,11 +21,14 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 
 @SuppressWarnings("serial")
 public class Platno extends JFrame implements ActionListener, MouseListener {
@@ -44,6 +50,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	private int zacetnaSirina;
 	private JMenuItem openAction;
 	private JMenuItem hitrost;
+	private JMenuItem instr;
 	
 	public Platno() {
 		super();
@@ -155,7 +162,8 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
         JMenuItem exitAction = new JMenuItem("Exit");
         hitrost = new JMenuItem("Hitrost");
         hitrost.addActionListener(this);
-        JMenuItem instr = new JMenuItem("Instrumenti");
+        instr = new JMenuItem("Instrumenti");
+        instr.addActionListener(this);
 	    
         fileMenu.add(openAction);
         fileMenu.add(exitAction);
@@ -196,6 +204,66 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	    catch (IOException exc) {
 	        exc.printStackTrace();
 	    }
+	}
+	
+	public void podajInstr(){
+		
+		JFrame frame = new JFrame();
+	
+		Object[] possibilities = {"klavir", "èelo", "kitara", "bass", "violina", "orgle", "saksofon"};
+		String s = (String)JOptionPane.showInputDialog(
+		                    frame,
+		                    "Izberi glasbilo, ki predstavlja rdeèo barvo:",
+		                    "Customized Dialog",
+		                    JOptionPane.PLAIN_MESSAGE,
+		                    null,
+		                    possibilities,
+		                    "klavir");
+		
+		String s1 = (String)JOptionPane.showInputDialog(
+		                    frame,
+		                    "Izberi glasbilo, ki predstavlja zeleno barvo:",
+		                    "Customized Dialog",
+		                    JOptionPane.PLAIN_MESSAGE,
+		                    null,
+		                    possibilities,
+		                    "klavir");
+		
+		
+		String s2 = (String)JOptionPane.showInputDialog(
+		                    frame,
+		                    "Izberi glasbilo, ki predstavlja modro barvo:",
+		                    "Customized Dialog",
+		                    JOptionPane.PLAIN_MESSAGE,
+		                    null,
+		                    possibilities,
+		                    "klavir");
+		
+		
+		String[] sez = {s, s1, s2};
+		
+		int k = 0;
+		for(String i : sez){
+			if (i.equals("klavir")){
+				Predvajaj.zamenjaj(1, k);
+			} else if(i.equals("bass")){
+				Predvajaj.zamenjaj(34, k);
+			} else if (i.equals("violina")){
+				Predvajaj.zamenjaj(41, k);
+			} else if (i.equals("èelo")){
+				Predvajaj.zamenjaj(43, k);
+			} else if (i.equals("orgle")){
+				Predvajaj.zamenjaj(19, k);
+			} else if (i.equals("saksofon")){
+				Predvajaj.zamenjaj(67, k);
+			} else if (i.equals("kitara")){
+				Predvajaj.zamenjaj(27, k);
+			}
+			k +=1;
+		}
+		
+		
+		
 	}
 	
 	public void podajhitrost(){
@@ -318,6 +386,8 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 			predvajaj1.setVisible(!aliJeSam);
 		} else if (source == hitrost) {
 			podajhitrost();
+		} else if (source == instr){
+			podajInstr();
 		}
 	}
 

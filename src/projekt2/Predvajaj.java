@@ -24,6 +24,9 @@ public class Predvajaj {
 		private static int sirina;
 		private static int visina;
 		private static int velocity = 2000;
+		static int rdeca = 34;
+		static int zelena = 1;
+		static int modra = 43;
 		
 		public static void zaigraj(String name, int n, int w, int h) throws InterruptedException{
 		
@@ -67,9 +70,9 @@ public static void igraj(String name, int n) throws InterruptedException {
 			 MidiChannel[] mc3 = synth.getChannels();
 			 MidiChannel[] mc4 = synth.getChannels();
 
-			 mc[4].programChange(0,34);
-			 mc2[5].programChange(0, 1);
-			 mc3[6].programChange(0,43);
+			 mc[4].programChange(0,rdeca);
+			 mc2[5].programChange(0, zelena);
+			 mc3[6].programChange(0,modra);
 			 mc4[3].programChange(0, 113);
 			 
 			 
@@ -87,6 +90,10 @@ public static void igraj(String name, int n) throws InterruptedException {
 				 boolean a3;
 		     
 				 for (int[] i : sez){
+					 mc[4].programChange(0,rdeca);
+					 mc2[5].programChange(0, zelena);
+					 mc3[6].programChange(0,modra);
+					 
 					 Platno.nastaviBarve(i[0],i[1], i[2]);
 					 Platno.nastaviXY(i[3], i[4]);
 					 
@@ -226,6 +233,17 @@ public static void poklikaj(int x, int y) throws InterruptedException{
 
 public static void spremeniHitrost(int hitr) {
 	velocity = hitr;
+	
+}
+
+public static void zamenjaj(int i, int k) {
+	if (k == 0){
+		rdeca = i;
+	} else if (k == 1){
+		zelena = i;
+	} else if (k== 2){
+		modra = i;
+	}
 	
 }
 }

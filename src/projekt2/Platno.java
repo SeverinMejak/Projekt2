@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.List;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,8 +11,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -21,14 +18,11 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
 
 @SuppressWarnings("serial")
 public class Platno extends JFrame implements ActionListener, MouseListener {
@@ -309,6 +303,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 					zacetnaSirina = ImageIO.read(new File(datoteka)).getWidth();
 					setSize(zacetnaSirina, zacetnaVisina);
 					spremeniIkono("/Open-icon.png");
+					Predvajaj.nastavljenaSlika = 0;
 				} catch (IOException e1) {
 				}
 				openItem.setVisible(false);
@@ -326,8 +321,12 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 			spremeniIkono("/play.png");
 			
 			try {
-				Predvajaj.zaigraj(datoteka, 0, zacetnaSirina, zacetnaVisina);
+				Predvajaj.nastaviSliko(datoteka, 0);
+				Predvajaj.zaigraj(0, zacetnaSirina);
 			} catch (InterruptedException e) {
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			predvajaj.setVisible(false);
 			predvajaj1.setVisible(false);
@@ -337,12 +336,17 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 			sam.setVisible(false);
 			xy.setVisible(true);
 			barve.setVisible(true);
+			
 		} else if (source == predvajaj1){
 			spremeniIkono("/play.png");
 			
 			try {
-				Predvajaj.zaigraj(datoteka, 1, zacetnaSirina, zacetnaVisina);
+				Predvajaj.nastaviSliko(datoteka, 1);
+				Predvajaj.zaigraj(1, zacetnaSirina);
 			} catch (InterruptedException e) {
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			predvajaj.setVisible(false);
 			predvajaj1.setVisible(false);
@@ -352,6 +356,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 			sam.setVisible(false);
 			xy.setVisible(true);
 			barve.setVisible(true);
+			
 		}
 		else if (source == prekini){
 			spremeniIkono("/stop.png");
@@ -371,19 +376,34 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 			sam.setVisible(true);
 		} else if (source == play){
 			spremeniIkono("/play.png");
-			Predvajaj.play();
+			try {
+				Predvajaj.play();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			sam.setVisible(false);
 		} else if (source == sam){
 			spremeniIkono("/play.png");
 			Predvajaj.samcat();
 			aliJeSam = !aliJeSam;
 			try {
-				Predvajaj.zaigraj(datoteka, 2, zacetnaSirina, zacetnaVisina);
+				Predvajaj.nastaviSliko(datoteka, 2);
+				Predvajaj.zaigraj(2, zacetnaSirina);
 			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			predvajaj.setVisible(!aliJeSam);
 			predvajaj1.setVisible(!aliJeSam);
+			play.setVisible(false);
+			pavza.setVisible(false);
+			prekini.setVisible(false);
 		} else if (source == hitrost) {
 			podajhitrost();
 		} else if (source == instr){

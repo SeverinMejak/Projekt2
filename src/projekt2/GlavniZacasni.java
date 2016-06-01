@@ -5,6 +5,8 @@ import javax.swing.JFrame;
 
 
 @SuppressWarnings("serial")
+
+//Glavni program
 public class GlavniZacasni extends JFrame {
 	public static void main(String[] args) throws IOException, InterruptedException {
 		JFrame.setDefaultLookAndFeelDecorated(false);

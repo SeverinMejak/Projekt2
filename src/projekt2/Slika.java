@@ -14,17 +14,21 @@ import javax.swing.JPanel;
 public class Slika extends JPanel {
 	BufferedImage slika;
 	
+	// konstruktor
 	public Slika() {
 		super();
 		this.slika = null;
 	}
-
+	
+	// riše
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if (this.slika != null) {
 			// èe imamo sliko, jo narišemo
 			g.drawImage(slika, 0, 0, getWidth(),getHeight(), null);
+			g.drawOval(((Platno.x-15) * getWidth())/Platno.zacetnaSirina, ((Platno.y-15) * getHeight())/Platno.zacetnaVisina, 30, 30);
+			
 		}
 		else {
 			// èe slike ni, napišemo, da je ni
@@ -42,12 +46,15 @@ public class Slika extends JPanel {
 					(int)((getHeight() - r.getHeight())/2));
 		}
 	}
-
-	public void setSlika(String datoteka)  throws IOException {
+	
+	// prebere sliko iz datoteko
+	public  void setSlika(String datoteka)  throws IOException {
         File file = new File(datoteka);
         slika = ImageIO.read(file);
         
         repaint();
     }
+	
+
 	
 }

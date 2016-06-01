@@ -17,7 +17,7 @@ public class NaloziSliko {
 		 
 		File imgPath = new File(ImageName);
 		BufferedImage slika = ImageIO.read(imgPath);
-		System.out.println(ImageName);
+
 	     
 		int w = slika.getWidth();
 		int h = slika.getHeight();

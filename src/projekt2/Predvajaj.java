@@ -30,8 +30,9 @@ public class Predvajaj {
 		static int stevec = 0;
 		static int nastavljenaSlika = 0; 
 		static int nacin;
+	
 		
-		public static void zaigraj(int n, int w) throws InterruptedException{
+		public static void zaigraj(int n, int w, Platno slika) throws InterruptedException{
 			nacin = n;
 			sirina = w;
 
@@ -46,7 +47,7 @@ public class Predvajaj {
 				try {
 					prekinitev = false;
 					
-					spilaj(n);
+					spilaj(n, slika);
 					vlakno = null;
 				
 				
@@ -69,7 +70,7 @@ public static void nastaviSliko(String name, int n) throws InterruptedException,
 		
 }
 	
-public static void spilaj(int m) throws InterruptedException, IOException{	
+public static void spilaj(int m, Platno slika) throws InterruptedException, IOException{	
 		 Synthesizer synth = null;
 		 try {
 			 synth = MidiSystem.getSynthesizer();
@@ -113,8 +114,7 @@ public static void spilaj(int m) throws InterruptedException, IOException{
 				 mc2[5].programChange(0, zelena);
 				 mc3[6].programChange(0,modra);
 				 
-				 Platno.nastaviBarve(i[0],i[1], i[2]);
-				 Platno.nastaviXY(i[3], i[4]);
+				 
 				 
 				 mc4[3].allNotesOff();
 				 
@@ -182,20 +182,33 @@ public static void spilaj(int m) throws InterruptedException, IOException{
 		   	 }
 		   	 
 		   	 Thread.sleep(velocity);
+		   	 Platno.nastaviBarve(i[0],i[1], i[2]);
+			 Platno.x = i[3];
+			 Platno.y= i[4];
+
+			 slika.repaint();
+			 
+			 
+			 Platno.nastaviXY(Platno.x,Platno.y);
 			 }
+				
 			 }
+			 
 		 } else {
 			 a = -1;
 			 b = -1;
 			 c = -1;
 			 while (sam){
-				 System.out.println("Sm tukej");
+				 Thread.sleep(10);
 				 if (a== -1 || b == -1 || c==-1){
 					 
 				 } else {
 					 mc[4].allNotesOff();
 					 mc2[5].allNotesOff();
 					 mc3[6].allNotesOff();
+					 mc[4].programChange(0,rdeca);
+					 mc2[5].programChange(0, zelena);
+					 mc3[6].programChange(0,modra);
 					 mc[4].noteOn( a, force + 90);
 					 mc2[5].noteOn(b, force + 90);
 					 mc3[6].noteOn(c, force + 60);
@@ -230,7 +243,7 @@ public static void play() throws InterruptedException, IOException {
 	prekinitev = false;
 	pavza = false;
 	sam = false;
-	zaigraj(nacin, sirina);
+	zaigraj(nacin, sirina, null);
 	
 }
 
@@ -242,14 +255,16 @@ public static void samcat(){
 }
 
 public static void poklikaj(int x, int y) throws InterruptedException{
-	System.out.println(nastavljenaSlika);
+	
 	if (!(nastavljenaSlika == 0)){
 	
 	int p = sirina*y + x;
+	Platno.nastaviXY(x,y);
 	int[] seznam = sez[p];
 	a =   (seznam[0]*80)/255 + 20;
   	b = (seznam[1]*80)/255 + 20;
   	c = (seznam[2]*80)/255 + 20;
+  	Platno.nastaviBarve(a, b, c);
 	}
 }
 

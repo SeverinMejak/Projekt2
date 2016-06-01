@@ -514,13 +514,15 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 			x = e.getX();
 			y = e.getY();
 			
-			int w = this.zaslon.getWidth();
-			int h = this.zaslon.getHeight();
+			
+			Rectangle r = this.getBounds();
+			int h = r.height;
+			int w = r.width;
 			
 			try {
 				Predvajaj.poklikaj((x * zacetnaSirina)/w,(y * zacetnaVisina)/h);
 				x = (x * zacetnaSirina)/w;
-				y = ((y- menuBar.getHeight()) * zacetnaVisina)/h;
+				y = (y * zacetnaVisina)/h;
 				repaint();
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();

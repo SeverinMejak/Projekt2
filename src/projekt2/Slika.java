@@ -28,10 +28,12 @@ public class Slika extends JPanel {
 		if (this.slika != null) {
 			// èe imamo sliko, jo narišemo
 			g.drawImage(slika, 0, 0, getWidth(),getHeight(), null);
+			if(Platno.aliJeSam || Platno.aliVrste || Platno.aliStolpci){
 			g.setColor(Color.CYAN);
 			g.fillOval(((Platno.x) * getWidth())/Platno.zacetnaSirina - 15, ((Platno.y) * getHeight())/Platno.zacetnaVisina -15, 30, 30);
 			g.setColor(Color.MAGENTA);
 			g.fillOval(((Platno.x) * getWidth())/Platno.zacetnaSirina - 5, ((Platno.y) * getHeight())/Platno.zacetnaVisina - 5, 10, 10);
+			}
 		}
 		else {
 			// èe slike ni, napišemo, da je ni

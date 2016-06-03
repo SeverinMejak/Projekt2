@@ -67,9 +67,15 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	//Zaèetna višina in širina
 	static int zacetnaVisina;
 	static int zacetnaSirina;
+
+	
 	
 	//Ali je sam vkljuèen
-	private boolean aliJeSam;
+	static boolean aliJeSam;
+	
+	public static boolean aliVrste;
+	
+	public static boolean aliStolpci;
 	
 	//Konstruktor
 	public Platno() {
@@ -228,6 +234,8 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	    
 	    spremeniIkono("/disk.png");
 	    aliJeSam = false;
+	    aliStolpci= false;
+	    aliVrste = false;
 	    
 	    this.addMouseListener(this);
 	    pack();
@@ -264,29 +272,50 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 		String s = (String)JOptionPane.showInputDialog(
 		                    frame,
 		                    "Izberi glasbilo, ki predstavlja rdeèo barvo:",
-		                    "Customized Dialog",
+		                    "Izberi glasbilo",
 		                    JOptionPane.PLAIN_MESSAGE,
 		                    null,
 		                    possibilities,
 		                    "klavir");
+		
+		String beseda2;
+		if (s == "klavir"){
+			beseda2 = "èelo";
+		} else {
+			beseda2 = "klavir";
+		}
 		
 		String s1 = (String)JOptionPane.showInputDialog(
 		                    frame,
 		                    "Izberi glasbilo, ki predstavlja zeleno barvo:",
-		                    "Customized Dialog",
+		                    "Izberi glasbilo",
 		                    JOptionPane.PLAIN_MESSAGE,
 		                    null,
 		                    possibilities,
-		                    "klavir");
+		                    beseda2);
+		
+		String beseda3;
+
+		if (s == "klavir" || s1 == "klavir"){
+			if (s == "èelo" || s1 == "èelo"){
+				beseda3 = "bass";
+			} else {
+				beseda3 = "èelo";
+			}
+			
+		} else {
+
+			beseda3 = "klavir";
+		}
 		
 		String s2 = (String)JOptionPane.showInputDialog(
 		                    frame,
 		                    "Izberi glasbilo, ki predstavlja modro barvo:",
-		                    "Customized Dialog",
+		                    "Izberi glasbilo",
 		                    JOptionPane.PLAIN_MESSAGE,
 		                    null,
 		                    possibilities,
-		                    "klavir");
+		                    beseda3);
 		
 		String[] sez = {s, s1, s2};
 		
@@ -319,20 +348,24 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 		while(!inputAccepted) {
 			
 			  try {
-					String beseda =   JOptionPane.showInputDialog("Doloèi èas med dvema zvokoma v milisekundah:");
+					String beseda =   JOptionPane.showInputDialog(null, "Doloèi èas med dvema zvokoma v milisekundah:", "Hitrost", JOptionPane.QUESTION_MESSAGE);
+					
+					
 					if (beseda.equalsIgnoreCase("")){
 						inputAccepted = true;
 					}
+			
+					
 				    int hitr = Integer.parseInt(beseda);
 				 
 				    if (hitr <= 0){
-		
+				    	
 				    } else{
 				    	inputAccepted = true;
 					      Predvajaj.spremeniHitrost(hitr);
 				    }
-			  } catch(NumberFormatException e) {
-				  
+			  } catch(Exception e) {
+				  inputAccepted = true;
 			  }
 		}
 	}
@@ -375,67 +408,73 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 		      
 		}
 		else if (source == predvajaj || source == predvajajVrstice){
-			spremeniIkono("/play.png");
-			
-			try {
-				Predvajaj.nastaviSliko(datoteka, 0);
-				Predvajaj.zaigraj(0, zacetnaSirina);
-			} catch (InterruptedException e) {
-			} catch (IOException e) {
+			aliVrste = !aliVrste;
+			if (aliVrste){
+				spremeniIkono("/play.png");
+				
+				try {
+					Predvajaj.nastaviSliko(datoteka, 0);
+					Predvajaj.zaigraj(0, zacetnaSirina);
+				} catch (InterruptedException e) {
+				} catch (IOException e) {
 
-				e.printStackTrace();
+					e.printStackTrace();
+				}
+				predvajaj.setVisible(false);
+				predvajaj1.setVisible(false);
+				play.setVisible(true);
+				pavza.setVisible(true);
+				prekini.setVisible(true);
+				sam.setEnabled(false);
+				xy.setVisible(true);
+				barve.setVisible(true);
+				predvajajSam.setVisible(false);
+				predvajajStolpce.setEnabled(false);
+				
+				aliVrste = true;
+				aliStolpci = false;
+				aliJeSam = false;
+			} else {
+				prekini();
 			}
-			predvajaj.setVisible(false);
-			predvajaj1.setVisible(false);
-			play.setVisible(true);
-			pavza.setVisible(true);
-			prekini.setVisible(true);
-			sam.setVisible(false);
-			xy.setVisible(true);
-			barve.setVisible(true);
-			predvajajSam.setVisible(false);
-			predvajajStolpce.setVisible(false);
+
 			
 			
 		} else if (source == predvajaj1 || source == predvajajStolpce){
-			spremeniIkono("/play.png");
-			
-			try {
-				Predvajaj.nastaviSliko(datoteka, 1);
-				Predvajaj.zaigraj(1, zacetnaSirina);
-			} catch (InterruptedException e) {
-			} catch (IOException e) {
-
-				e.printStackTrace();
+			aliStolpci = !aliStolpci;
+			if (aliStolpci){
+				spremeniIkono("/play.png");
+				
+				try {
+					Predvajaj.nastaviSliko(datoteka, 1);
+					Predvajaj.zaigraj(1, zacetnaSirina);
+				} catch (InterruptedException e) {
+				} catch (IOException e) {
+	
+					e.printStackTrace();
+				}
+				predvajaj.setVisible(false);
+				predvajaj1.setVisible(false);
+				play.setVisible(true);
+				pavza.setVisible(true);
+				prekini.setVisible(true);
+				sam.setEnabled(false);
+				xy.setVisible(true);
+				barve.setVisible(true);
+				predvajajSam.setVisible(false);
+				predvajajVrstice.setEnabled(false);
+				
+				aliStolpci = true;
+				aliVrste = false;
+				aliJeSam = false;
+			} else {
+				prekini();
+				
 			}
-			predvajaj.setVisible(false);
-			predvajaj1.setVisible(false);
-			play.setVisible(true);
-			pavza.setVisible(true);
-			prekini.setVisible(true);
-			sam.setVisible(false);
-			xy.setVisible(true);
-			barve.setVisible(true);
-			predvajajSam.setVisible(false);
-			predvajajVrstice.setVisible(false);
 			
 		}
 		else if (source == prekini){
-			spremeniIkono("/stop.png");
-			Predvajaj.prekini();
-			sam.setVisible(true);
-			predvajaj.setVisible(true);
-			predvajaj1.setVisible(true);
-			play.setVisible(false);
-			pavza.setVisible(false);
-			prekini.setVisible(false);
-			xy.setVisible(false);
-			barve.setVisible(false);
-			predvajajSam.setVisible(true);
-			predvajajStolpce.setVisible(true);
-			predvajajVrstice.setVisible(true);
-			predvajajStolpce.setSelected(false);
-			predvajajVrstice.setSelected(false);
+			prekini();
 			
 		} else if (source == pavza){
 			spremeniIkono("/pause.png");
@@ -487,8 +526,8 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 			        Image img = ImageIO.read(getClass().getResource("/stop.png"));
 			        Image newimg = img.getScaledInstance( VG, VG,  java.awt.Image.SCALE_SMOOTH ) ;
 			        predvajajSam.setIcon(new ImageIcon(newimg));
-			        predvajajVrstice.setVisible(false);
-					predvajajStolpce.setVisible(false);
+			        predvajajVrstice.setEnabled(false);
+					predvajajStolpce.setEnabled(false);
 			      } catch (IOException ex1) {
 			      }
 			} else {
@@ -498,8 +537,9 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 				    Image img = ImageIO.read(getClass().getResource("/play.png"));
 				    Image newimg = img.getScaledInstance( VG, VG,  java.awt.Image.SCALE_SMOOTH ) ;
 				    predvajajSam.setIcon(new ImageIcon(newimg));
-				    predvajajVrstice.setVisible(true);
-					predvajajStolpce.setVisible(true);
+				    predvajajVrstice.setEnabled(true);
+					predvajajStolpce.setEnabled(true);
+					repaint();
 				     } catch (IOException ex2) {
 				     }
 			}
@@ -566,6 +606,24 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 		
 	}
 
-	
-
+	public void prekini(){
+		spremeniIkono("/stop.png");
+		Predvajaj.prekini();
+		sam.setEnabled(true);
+		predvajaj.setVisible(true);
+		predvajaj1.setVisible(true);
+		play.setVisible(false);
+		pavza.setVisible(false);
+		prekini.setVisible(false);
+		xy.setVisible(false);
+		barve.setVisible(false);
+		predvajajSam.setVisible(true);
+		predvajajStolpce.setEnabled(true);
+		predvajajVrstice.setEnabled(true);
+		predvajajStolpce.setSelected(false);
+		predvajajVrstice.setSelected(false);
+		aliVrste = false;
+		aliStolpci = false;
+		aliJeSam = false;
+	}
 }

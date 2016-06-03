@@ -1,4 +1,5 @@
 package projekt2;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -27,8 +28,10 @@ public class Slika extends JPanel {
 		if (this.slika != null) {
 			// èe imamo sliko, jo narišemo
 			g.drawImage(slika, 0, 0, getWidth(),getHeight(), null);
-			g.drawOval(((Platno.x-15) * getWidth())/Platno.zacetnaSirina, ((Platno.y-15) * getHeight())/Platno.zacetnaVisina, 30, 30);
-			
+			g.setColor(Color.CYAN);
+			g.fillOval(((Platno.x) * getWidth())/Platno.zacetnaSirina - 15, ((Platno.y) * getHeight())/Platno.zacetnaVisina -15, 30, 30);
+			g.setColor(Color.MAGENTA);
+			g.fillOval(((Platno.x) * getWidth())/Platno.zacetnaSirina - 5, ((Platno.y) * getHeight())/Platno.zacetnaVisina - 5, 10, 10);
 		}
 		else {
 			// èe slike ni, napišemo, da je ni

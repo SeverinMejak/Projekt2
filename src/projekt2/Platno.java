@@ -28,9 +28,11 @@ import javax.swing.JRadioButtonMenuItem;
 @SuppressWarnings("serial")
 public class Platno extends JFrame implements ActionListener, MouseListener {
 	
-	Slika zaslon;
+	static Slika zaslon;
 	
 	JLabel label;
+	
+	Predvajaj predvajalnik;
 	
 	// Gumbi
 	private JButton openItem;
@@ -81,6 +83,8 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 		setLayout(new GridLayout(1, 6));
 		
 	    zaslon = new Slika();
+	    
+	    predvajalnik = new Predvajaj();
 	    
 	    //Dodajanje gumbov 
 	    //Gumb "Odpri"
@@ -237,6 +241,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	//Nastavi gumb XY
 	public static void nastaviXY (int a, int b){
 		xy.setText("X:" + a + ", " + "Y:" +  b);
+		
 	}
 	
 	//Spremeni ikono okvirja
@@ -374,7 +379,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 			
 			try {
 				Predvajaj.nastaviSliko(datoteka, 0);
-				Predvajaj.zaigraj(0, zacetnaSirina, this);
+				Predvajaj.zaigraj(0, zacetnaSirina);
 			} catch (InterruptedException e) {
 			} catch (IOException e) {
 
@@ -397,7 +402,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 			
 			try {
 				Predvajaj.nastaviSliko(datoteka, 1);
-				Predvajaj.zaigraj(1, zacetnaSirina, this);
+				Predvajaj.zaigraj(1, zacetnaSirina);
 			} catch (InterruptedException e) {
 			} catch (IOException e) {
 
@@ -459,7 +464,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 			aliJeSam = !aliJeSam;
 			try {
 				Predvajaj.nastaviSliko(datoteka, 2);
-				Predvajaj.zaigraj(2, zacetnaSirina, this);
+				Predvajaj.zaigraj(2, zacetnaSirina);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -511,18 +516,19 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 		
 		
 		if (aliJeSam){
-			x = e.getX();
-			y = e.getY();
 			
 			
-			Rectangle r = this.getBounds();
-			int h = r.height;
-			int w = r.width;
+			
+			int h = zaslon.getHeight();
+			int w = zaslon.getWidth();
+			
+			x = ((e.getX() - 9)* zacetnaSirina)/w;
+			y = ((e.getY() - 63) * zacetnaVisina)/h;
+			
 			
 			try {
-				Predvajaj.poklikaj((x * zacetnaSirina)/w,(y * zacetnaVisina)/h);
-				x = (x * zacetnaSirina)/w;
-				y = (y * zacetnaVisina)/h;
+				Predvajaj.poklikaj(x, y);
+
 				repaint();
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();

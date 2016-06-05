@@ -9,30 +9,53 @@ import javax.sound.midi.Soundbank;
 import javax.sound.midi.Synthesizer;
 
 public class Predvajaj {
-		static int instrument = 19;
-		static int force = 45;
-		static Synthesizer synth;
-		static boolean prekinitev = false;
-		static boolean pavza = false;
-		static boolean play = false;
+		static int instrument;
+		static int force;
+		Synthesizer synth;
+		static boolean prekinitev;
+		static boolean pavza;
+		static boolean play;
 		static Thread vlakno;
-		protected static boolean sam = false;
+		protected static boolean sam;
 		protected static int a;
 		protected static int b;
 		protected static int c;
 		static int[][] sez;
 		private static int sirina;
 
-		private static int velocity = 2000;
-		static int rdeca = 34;
-		static int zelena = 1;
-		static int modra = 43;
-		static int stevec = 0;
-		static int nastavljenaSlika = 0; 
+		
+		private static int velocity;
+		static int rdeca;
+		static int zelena;
+		static int modra;
+		static int stevec;
+		static int nastavljenaSlika;  
 		static int nacin;
 	
 		
-		public static void zaigraj(int n, int w, Platno slika) throws InterruptedException{
+		
+		
+		public Predvajaj() {
+			super();
+			instrument = 19;
+			force = 45;
+			prekinitev = false;
+			pavza = false;
+			play = false;
+			
+			sam = false;
+			
+
+			velocity = 2000;
+			rdeca = 34;
+			zelena = 1;
+			modra = 43;
+			stevec = 0;
+			nastavljenaSlika = 0; 
+			
+		}
+
+		public static  void zaigraj(int n, int w) throws InterruptedException{
 			nacin = n;
 			sirina = w;
 
@@ -47,7 +70,7 @@ public class Predvajaj {
 				try {
 					prekinitev = false;
 					
-					spilaj(n, slika);
+					spilaj(n);
 					vlakno = null;
 				
 				
@@ -58,7 +81,7 @@ public class Predvajaj {
 		vlakno.start();
 		}
   
-public static void nastaviSliko(String name, int n) throws InterruptedException, IOException {
+public static  void nastaviSliko(String name, int n) throws InterruptedException, IOException {
 	if (nastavljenaSlika == 0 || !(n%2 + 1 == nastavljenaSlika)){
 		sez = NaloziSliko.pretvori(name, n);
 		if (!(n==1)){
@@ -70,7 +93,7 @@ public static void nastaviSliko(String name, int n) throws InterruptedException,
 		
 }
 	
-public static void spilaj(int m, Platno slika) throws InterruptedException, IOException{	
+public static  void spilaj(int m) throws InterruptedException, IOException{	
 		 Synthesizer synth = null;
 		 try {
 			 synth = MidiSystem.getSynthesizer();
@@ -186,8 +209,7 @@ public static void spilaj(int m, Platno slika) throws InterruptedException, IOEx
 			 Platno.x = i[3];
 			 Platno.y= i[4];
 
-			 slika.repaint();
-			 
+			 Platno.zaslon.repaint();
 			 
 			 Platno.nastaviXY(Platno.x,Platno.y);
 			 }
@@ -223,7 +245,7 @@ public static void spilaj(int m, Platno slika) throws InterruptedException, IOEx
 		 
     synth.close();
 }
-public static void prekini() {
+public static  void prekini() {
 	prekinitev = true;
 	play = !pavza;
 	sam = false;
@@ -237,13 +259,13 @@ public static void pavza() {
 	prekinitev = false;
 }
 
-public static void play() throws InterruptedException, IOException {
+public static  void play() throws InterruptedException, IOException {
 	
 	play = true;
 	prekinitev = false;
 	pavza = false;
 	sam = false;
-	zaigraj(nacin, sirina, null);
+	zaigraj(nacin, sirina);
 	
 }
 
@@ -257,14 +279,13 @@ public static void samcat(){
 public static void poklikaj(int x, int y) throws InterruptedException{
 	
 	if (!(nastavljenaSlika == 0)){
-	
-	int p = sirina*y + x;
-	Platno.nastaviXY(x,y);
-	int[] seznam = sez[p];
-	a =   (seznam[0]*80)/255 + 20;
-  	b = (seznam[1]*80)/255 + 20;
-  	c = (seznam[2]*80)/255 + 20;
-  	Platno.nastaviBarve(a, b, c);
+		int p = sirina*y + x;
+		Platno.nastaviXY(x,y);
+		int[] seznam = sez[p];
+		a =   (seznam[0]*80)/255 + 20;
+	  	b = (seznam[1]*80)/255 + 20;
+	  	c = (seznam[2]*80)/255 + 20;
+	  	Platno.nastaviBarve(a, b, c);
 	}
 }
 

@@ -1,4 +1,5 @@
 package projekt2;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -20,24 +21,28 @@ public class Slika extends JPanel {
 		this.slika = null;
 	}
 	
-	// riöe
+	// ri≈°e
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if (this.slika != null) {
-			// Ëe imamo sliko, jo nariöemo
+			// ƒåe imamo sliko, jo nari≈°emo
 			g.drawImage(slika, 0, 0, getWidth(),getHeight(), null);
-			g.drawOval(((Platno.x-15) * getWidth())/Platno.zacetnaSirina, ((Platno.y-15) * getHeight())/Platno.zacetnaVisina, 30, 30);
-			
+			if(Platno.aliJeSam || Platno.aliVrste || Platno.aliStolpci){
+			g.setColor(Color.CYAN);
+			g.fillOval(((Platno.x) * getWidth())/Platno.zacetnaSirina - 15, ((Platno.y) * getHeight())/Platno.zacetnaVisina -15, 30, 30);
+			g.setColor(Color.MAGENTA);
+			g.fillOval(((Platno.x) * getWidth())/Platno.zacetnaSirina - 5, ((Platno.y) * getHeight())/Platno.zacetnaVisina - 5, 10, 10);
+			}
 		}
 		else {
-			// Ëe slike ni, napiöemo, da je ni
+			// ƒåe slike ni, napi≈°emo, da je ni
 			String napis = "(ni slike)";
 			// nastavimo font za izpis
 			g.setFont(new Font("Helvetica", Font.PLAIN, 30));
-			// dobimo objekt fm, ki zna raËunati vse v zvezi s fontom
+			// dobimo objekt fm, ki zna raƒçunati vse v zvezi s fontom
 			FontMetrics fm = g.getFontMetrics();
-			// objekt fm vpraöamo, kako velik bo naö napis, da ga znamo
+			// objekt fm vpra≈°amo, kako velik bo na≈° napis, da ga znamo
 			// centrirati
 			Rectangle2D r = fm.getStringBounds(napis, g);
 			// naredimo nais, centrirano

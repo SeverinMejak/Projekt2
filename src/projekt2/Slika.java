@@ -7,26 +7,26 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+//Razred, ki nariöe sliko
 @SuppressWarnings("serial")
 public class Slika extends JPanel {
 	BufferedImage slika;
 	
-	// konstruktor
+	//Konstruktor
 	public Slika() {
 		super();
 		this.slika = null;
 	}
 	
-	// ri≈°e
+	//Riöe
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if (this.slika != null) {
-			// ƒåe imamo sliko, jo nari≈°emo
+			//»e imamo sliko, jo nariöemo
 			g.drawImage(slika, 0, 0, getWidth(),getHeight(), null);
 			if(Platno.aliJeSam || Platno.aliVrste || Platno.aliStolpci){
 			g.setColor(Color.CYAN);
@@ -36,23 +36,23 @@ public class Slika extends JPanel {
 			}
 		}
 		else {
-			// ƒåe slike ni, napi≈°emo, da je ni
+			//»e slike ni, napiöemo, da je ni
 			String napis = "(ni slike)";
-			// nastavimo font za izpis
+			//Nastavimo font za izpis
 			g.setFont(new Font("Helvetica", Font.PLAIN, 30));
-			// dobimo objekt fm, ki zna raƒçunati vse v zvezi s fontom
+			//Dobimo objekt fm, ki zna raËunati vse v zvezi s fontom
 			FontMetrics fm = g.getFontMetrics();
-			// objekt fm vpra≈°amo, kako velik bo na≈° napis, da ga znamo
-			// centrirati
+			//Objekt fm vpraöamo, kako velik bo naö napis, da ga znamo
+			//Centrirati
 			Rectangle2D r = fm.getStringBounds(napis, g);
-			// naredimo nais, centrirano
+			//Naredimo napis, centrirano
 			g.drawString(napis, 
 					(int)((getWidth() - r.getWidth())/2),
 					(int)((getHeight() - r.getHeight())/2));
 		}
 	}
 	
-	// prebere sliko iz datoteko
+	//Prebere sliko iz datoteke
 	public  void setSlika(String datoteka)  throws IOException {
         File file = new File(datoteka);
         slika = ImageIO.read(file);

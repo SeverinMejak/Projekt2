@@ -23,7 +23,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 
-//Grafiƒçni vmesnik programa
+//GrafiËni vmesnik programa
 @SuppressWarnings("serial")
 public class Platno extends JFrame implements ActionListener, MouseListener {
 	
@@ -38,13 +38,16 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	private JButton exitItem;
 	private JButton predvajaj;
 	private JButton predvajaj1;
-	public  String datoteka;
 	private JButton prekini;
 	private JButton pavza;
 	private JButton play;
 	private static JButton barve;
 	private static JButton xy;
 	private JButton predvajajSam;
+	
+	//Podatki o datoteki
+	public  File datoteka;
+	public String naslov;
 	
 	// Pull down menu
 	JMenuBar menuBar;
@@ -56,18 +59,17 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	private JRadioButtonMenuItem predvajajVrstice;
 	private JRadioButtonMenuItem predvajajStolpce;
 	
-	//Koordinate mi≈°ke
+	//Koordinate miöke
 	static int x;
 	static int y;
 	
 	//Velikost gumbov
 	int VG = 25;
-	
-	//Zaƒçetna vi≈°ina in ≈°irina
+
+	//ZaËetna viöina in öirina
 	static int zacetnaVisina;
 	static int zacetnaSirina;
 
-<<<<<<< HEAD
 	//Ali je sam vkljuËen
 	static boolean aliJeSam;
 	
@@ -75,15 +77,6 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	public static boolean aliVrste;
 	
 	//Ali je igranje stolpcev vkljuËeno
-=======
-	
-	
-	//Ali je sam vkljuƒçen
-	static boolean aliJeSam;
-	
-	public static boolean aliVrste;
-	
->>>>>>> origin/master
 	public static boolean aliStolpci;
 	
 	//Konstruktor
@@ -97,8 +90,10 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 		
 		setLayout(new GridLayout(1, 6));
 		
+		//Ustvarimo objekt slika
 	    zaslon = new Slika();
 	    
+	    //Ustvarimo objekt predvajaj
 	    predvajalnik = new Predvajaj();
 	    
 	    //Dodajanje gumbov 
@@ -178,7 +173,6 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	    pavza.addActionListener(this);
 	    zaslon.add(pavza);
 	    pavza.setVisible(false);
-	 
 	    try {
 	        Image img = ImageIO.read(getClass().getResource("/pause.png"));
 	        Image newimg = img.getScaledInstance( VG, VG,  java.awt.Image.SCALE_SMOOTH ) ;
@@ -186,17 +180,15 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	      } catch (IOException ex) {
 	      }
 	    
-	    //Napisa
+	    //Napis z barvami
 	    barve = new JButton();
 	    zaslon.add(barve);
 	    barve.setVisible(false);
 	    
+	    //Napis s koordinatami
 	    xy = new JButton();
 	    zaslon.add(xy);
 	    xy.setVisible(false);
-	    
-	    
-	    
 	    
 	    //Ustvari menu
 	    menuBar = new JMenuBar();
@@ -209,34 +201,30 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
         
         openAction = new JMenuItem("Odpri");
         openAction.addActionListener(this);
+        fileMenu.add(openAction);
         
         JMenuItem exitAction = new JMenuItem("Izhod");
+        fileMenu.add(exitAction);
         
         hitrost = new JMenuItem("Hitrost");
         hitrost.addActionListener(this);
+        editMenu.add(hitrost);
         
         instr = new JMenuItem("Instrumenti");
         instr.addActionListener(this);
-	    
-        fileMenu.add(openAction);
-        fileMenu.add(exitAction);
-        editMenu.add(hitrost);
         editMenu.add(instr);
         
-        sam = new JRadioButtonMenuItem(
-                "Igraj sam");
+        sam = new JRadioButtonMenuItem("Igraj sam");
         sam.addActionListener(this);
         sam.setVisible(false);
         editMenu.add(sam);
         
-        predvajajVrstice = new JRadioButtonMenuItem(
-                "Predvajaj po vrsticah");
+        predvajajVrstice = new JRadioButtonMenuItem("Predvajaj po vrsticah");
         predvajajVrstice.addActionListener(this);
         predvajajVrstice.setVisible(false);
         editMenu.add(predvajajVrstice);
         
-        predvajajStolpce = new JRadioButtonMenuItem(
-                "Predvajaj zvezno po stolpcih");
+        predvajajStolpce = new JRadioButtonMenuItem("Predvajaj zvezno po stolpcih");
         predvajajStolpce.addActionListener(this);
         predvajajStolpce.setVisible(false);
         editMenu.add(predvajajStolpce);
@@ -245,6 +233,8 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	    add(zaslon); 
 	    
 	    spremeniIkono("/disk.png");
+	    
+	    //Nastavi parametre za igranje
 	    aliJeSam = false;
 	    aliStolpci= false;
 	    aliVrste = false;
@@ -277,17 +267,14 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	
 	//Spreminjanje instrumenta
 	public void podajInstr(){
-		
+		//Ustvari nov JFrame
 		JFrame frame = new JFrame();
-	
-		Object[] possibilities = {"klavir", "ƒçelo", "kitara", "bass", "violina", "orgle", "saksofon"};
+		
+		//Inicializiraj pojavno okno, preko katerega uporabnik izbere prvo glasbilo
+		Object[] possibilities = {"klavir", "Ëelo", "kitara", "bass", "violina", "orgle", "saksofon"};
 		String s = (String)JOptionPane.showInputDialog(
 		                    frame,
-<<<<<<< HEAD
 		                    "Izberi glasbilo, ki predstavlja rdeËo barvo:",
-=======
-		                    "Izberi glasbilo, ki predstavlja rdeÔøΩo barvo:",
->>>>>>> origin/master
 		                    "Izberi glasbilo",
 		                    JOptionPane.PLAIN_MESSAGE,
 		                    null,
@@ -296,15 +283,12 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 		
 		String beseda2;
 		if (s == "klavir"){
-<<<<<<< HEAD
 			beseda2 = "Ëelo";
-=======
-			beseda2 = "ƒçelo";
->>>>>>> origin/master
 		} else {
 			beseda2 = "klavir";
 		}
 		
+		//Inicializiraj pojavno okno, preko katerega uporabnik izbere drugo glasbilo
 		String s1 = (String)JOptionPane.showInputDialog(
 		                    frame,
 		                    "Izberi glasbilo, ki predstavlja zeleno barvo:",
@@ -315,26 +299,17 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 		                    beseda2);
 		
 		String beseda3;
-
 		if (s == "klavir" || s1 == "klavir"){
-<<<<<<< HEAD
 			if (s == "Ëelo" || s1 == "Ëelo"){
 				beseda3 = "bass";
 			} else {
 				beseda3 = "Ëelo";
-=======
-			if (s == "ƒçelo" || s1 == "ƒçelo"){
-				beseda3 = "bass";
-			} else {
-				beseda3 = "ƒçelo";
->>>>>>> origin/master
 			}
-			
 		} else {
-
 			beseda3 = "klavir";
 		}
 		
+		//Inicializiraj pojavno okno, preko katerega uporabnik izbere tretje glasbilo
 		String s2 = (String)JOptionPane.showInputDialog(
 		                    frame,
 		                    "Izberi glasbilo, ki predstavlja modro barvo:",
@@ -355,7 +330,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 					Predvajaj.zamenjaj(34, k);
 				} else if (i.equals("violina")){
 					Predvajaj.zamenjaj(41, k);
-				} else if (i.equals("ƒçelo")){
+				} else if (i.equals("Ëelo")){
 					Predvajaj.zamenjaj(43, k);
 				} else if (i.equals("orgle")){
 					Predvajaj.zamenjaj(19, k);
@@ -375,20 +350,11 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 		while(!inputAccepted) {
 			
 			  try {
-<<<<<<< HEAD
 					String beseda =   JOptionPane.showInputDialog(null, "DoloËi Ëas med dvema zvokoma v milisekundah:", "Hitrost", JOptionPane.QUESTION_MESSAGE);
-=======
-					String beseda =   JOptionPane.showInputDialog(null, "DoloÔøΩi ÔøΩas med dvema zvokoma v milisekundah:", "Hitrost", JOptionPane.QUESTION_MESSAGE);
->>>>>>> origin/master
-					
-					
 					if (beseda.equalsIgnoreCase("")){
 						inputAccepted = true;
 					}
-			
-					
 				    int hitr = Integer.parseInt(beseda);
-				 
 				    if (hitr <= 0){
 				    	
 				    } else{
@@ -405,39 +371,39 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	@Override
 	public void actionPerformed(ActionEvent ex) {
 		Object source = ex.getSource();
+		
+		//»e smo izbrali opcijo odpiranja datoteke
 		if (source == openItem || source == openAction) {
-			
-				
 		      JFileChooser chooser = new JFileChooser();
 		      chooser.setCurrentDirectory(new File("."));
 		      int r = chooser.showOpenDialog(this);
 		      if (r == JFileChooser.APPROVE_OPTION) {
-		    	  	datoteka = chooser.getSelectedFile().getAbsolutePath();
-		        
-					try {
-						zaslon.setSlika(datoteka);
-						setTitle(datoteka);
-						zacetnaVisina = ImageIO.read(new File(datoteka)).getHeight();
-						zacetnaSirina = ImageIO.read(new File(datoteka)).getWidth();
-						setSize(zacetnaSirina, zacetnaVisina+(menuBar.getHeight()));
-						spremeniIkono("/Open-icon.png");
-						Predvajaj.nastavljenaSlika = 0;
-					} catch (IOException e1) {
-					}
-					
-					openItem.setVisible(false);
-					predvajaj.setVisible(true);
-					predvajaj1.setVisible(true);
-					sam.setVisible(true);
-					predvajajSam.setVisible(true);
-					predvajajVrstice.setVisible(true);
-					predvajajStolpce.setVisible(true);
-				
-			    } else if (source == exitItem){
-			      System.exit(0);
-			    }	
-		      
+		    	  datoteka = chooser.getSelectedFile();
+		    	  try {
+		    		  naslov = datoteka.getAbsolutePath();
+		    		  zaslon.setSlika(naslov);
+		    		  setTitle(naslov);
+		    		  zacetnaVisina = ImageIO.read(datoteka).getHeight();
+		    		  zacetnaSirina = ImageIO.read(datoteka).getWidth();
+		    		  setSize(zacetnaSirina, zacetnaVisina+(menuBar.getHeight()));
+		    		  spremeniIkono("/Open-icon.png");
+		    		  Predvajaj.nastavljenaSlika = 0;
+		    	  } catch (IOException e1) {
+		    		  
+		    	  }
+		    	  openItem.setVisible(false);
+		    	  predvajaj.setVisible(true);
+		    	  predvajaj1.setVisible(true);
+		    	  sam.setVisible(true);
+		    	  predvajajSam.setVisible(true);
+		    	  predvajajVrstice.setVisible(true);
+		    	  predvajajStolpce.setVisible(true);
+			  } else if (source == exitItem){
+				  System.exit(0);
+			  }	
 		}
+		
+		//»e smo izbrali opcijo predvajanja po vrsticah
 		else if (source == predvajaj || source == predvajajVrstice){
 			aliVrste = !aliVrste;
 			if (aliVrste){
@@ -470,7 +436,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 			}
 
 			
-			
+		//»e smo izbrali opcijo predvajanja po stolpcih
 		} else if (source == predvajaj1 || source == predvajajStolpce){
 			aliStolpci = !aliStolpci;
 			if (aliStolpci){
@@ -500,35 +466,40 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 				aliJeSam = false;
 			} else {
 				prekini();
-				
 			}
-			
 		}
+		
+		//»e smo kliknili prekini
 		else if (source == prekini){
 			prekini();
-			
-		} else if (source == pavza){
+		} 
+		
+		// »e smo prekinili igranje
+		else if (source == pavza){
 			spremeniIkono("/pause.png");
 			Predvajaj.pavza();
 			sam.setVisible(true);
 			nastaviXY(0, 0);
 			nastaviBarve(0, 0, 0);
-		} else if (source == play){
+		} 
+		
+		// »e smo izbrali moûnost nadaljevanja igranja
+		else if (source == play){
 			spremeniIkono("/play.png");
 			try {
 				Predvajaj.play();
 				nastaviXY(0, 0);
 				nastaviBarve(0, 0, 0);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
 			sam.setVisible(false);
-			
-		} else if (source == sam || source == predvajajSam){
+		} 
+		
+		//»e smo izbrali naËin, da igra uporabnik
+		else if (source == sam || source == predvajajSam){
 			
 			Predvajaj.samcat();
 			aliJeSam = !aliJeSam;
@@ -538,7 +509,6 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			predvajaj.setVisible(!aliJeSam);
@@ -574,74 +544,65 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 				     } catch (IOException ex2) {
 				     }
 			}
-			
-		} else if (source == hitrost) {
+		} 
+		
+		//»e smo izbrali moûnost nastavljanja hitrosti
+		else if (source == hitrost) {
 			podajhitrost();
-		} else if (source == instr){
+		} 
+		
+		//»e smo izbrali moûnost nastavljanja instrumentov
+		else if (source == instr){
 			podajInstr();
 		}
 	}
 
+	//»e kliknemo miöko
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
-		
+		//»e je vklopljen naËin igranja uporabnika nadajujemo, drugaËe ne
 		if (aliJeSam){
-			
-			
-			
 			int h = zaslon.getHeight();
 			int w = zaslon.getWidth();
 			
-<<<<<<< HEAD
 			x = ((e.getX() - this.getInsets().left)* zacetnaSirina)/w;
 			y = ((e.getY() - this.getInsets().top - this.menuBar.getHeight()) * zacetnaVisina)/h;
-=======
-			x = ((e.getX() - 9)* zacetnaSirina)/w;
-			y = ((e.getY() - 63) * zacetnaVisina)/h;
->>>>>>> origin/master
-			
 			
 			try {
 				Predvajaj.poklikaj(x, y);
-
 				repaint();
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
 		}
-		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
+	//Funkcija, ki na novo prebarva zaslon
 	public void pobarvaj() {
 		repaint();
-		
 	}
 
+	//Funkcija, ki prekine vse dogajanje
 	public void prekini(){
 		spremeniIkono("/stop.png");
 		Predvajaj.prekini();
@@ -662,8 +623,4 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 		aliStolpci = false;
 		aliJeSam = false;
 	}
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/master

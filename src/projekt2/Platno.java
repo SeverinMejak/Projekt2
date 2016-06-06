@@ -23,7 +23,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 
-//GrafiËni vmesnik programa
+//Grafiƒçni vmesnik programa
 @SuppressWarnings("serial")
 public class Platno extends JFrame implements ActionListener, MouseListener {
 	
@@ -56,17 +56,18 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	private JRadioButtonMenuItem predvajajVrstice;
 	private JRadioButtonMenuItem predvajajStolpce;
 	
-	//Koordinate miöke
+	//Koordinate mi≈°ke
 	static int x;
 	static int y;
 	
 	//Velikost gumbov
 	int VG = 25;
 	
-	//ZaËetna viöina in öirina
+	//Zaƒçetna vi≈°ina in ≈°irina
 	static int zacetnaVisina;
 	static int zacetnaSirina;
 
+<<<<<<< HEAD
 	//Ali je sam vkljuËen
 	static boolean aliJeSam;
 	
@@ -74,6 +75,15 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	public static boolean aliVrste;
 	
 	//Ali je igranje stolpcev vkljuËeno
+=======
+	
+	
+	//Ali je sam vkljuƒçen
+	static boolean aliJeSam;
+	
+	public static boolean aliVrste;
+	
+>>>>>>> origin/master
 	public static boolean aliStolpci;
 	
 	//Konstruktor
@@ -270,10 +280,14 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 		
 		JFrame frame = new JFrame();
 	
-		Object[] possibilities = {"klavir", "Ëelo", "kitara", "bass", "violina", "orgle", "saksofon"};
+		Object[] possibilities = {"klavir", "ƒçelo", "kitara", "bass", "violina", "orgle", "saksofon"};
 		String s = (String)JOptionPane.showInputDialog(
 		                    frame,
+<<<<<<< HEAD
 		                    "Izberi glasbilo, ki predstavlja rdeËo barvo:",
+=======
+		                    "Izberi glasbilo, ki predstavlja rdeÔøΩo barvo:",
+>>>>>>> origin/master
 		                    "Izberi glasbilo",
 		                    JOptionPane.PLAIN_MESSAGE,
 		                    null,
@@ -282,7 +296,11 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 		
 		String beseda2;
 		if (s == "klavir"){
+<<<<<<< HEAD
 			beseda2 = "Ëelo";
+=======
+			beseda2 = "ƒçelo";
+>>>>>>> origin/master
 		} else {
 			beseda2 = "klavir";
 		}
@@ -299,10 +317,17 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 		String beseda3;
 
 		if (s == "klavir" || s1 == "klavir"){
+<<<<<<< HEAD
 			if (s == "Ëelo" || s1 == "Ëelo"){
 				beseda3 = "bass";
 			} else {
 				beseda3 = "Ëelo";
+=======
+			if (s == "ƒçelo" || s1 == "ƒçelo"){
+				beseda3 = "bass";
+			} else {
+				beseda3 = "ƒçelo";
+>>>>>>> origin/master
 			}
 			
 		} else {
@@ -330,7 +355,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 					Predvajaj.zamenjaj(34, k);
 				} else if (i.equals("violina")){
 					Predvajaj.zamenjaj(41, k);
-				} else if (i.equals("Ëelo")){
+				} else if (i.equals("ƒçelo")){
 					Predvajaj.zamenjaj(43, k);
 				} else if (i.equals("orgle")){
 					Predvajaj.zamenjaj(19, k);
@@ -350,7 +375,11 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 		while(!inputAccepted) {
 			
 			  try {
+<<<<<<< HEAD
 					String beseda =   JOptionPane.showInputDialog(null, "DoloËi Ëas med dvema zvokoma v milisekundah:", "Hitrost", JOptionPane.QUESTION_MESSAGE);
+=======
+					String beseda =   JOptionPane.showInputDialog(null, "DoloÔøΩi ÔøΩas med dvema zvokoma v milisekundah:", "Hitrost", JOptionPane.QUESTION_MESSAGE);
+>>>>>>> origin/master
 					
 					
 					if (beseda.equalsIgnoreCase("")){
@@ -564,8 +593,13 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 			int h = zaslon.getHeight();
 			int w = zaslon.getWidth();
 			
+<<<<<<< HEAD
 			x = ((e.getX() - this.getInsets().left)* zacetnaSirina)/w;
 			y = ((e.getY() - this.getInsets().top - this.menuBar.getHeight()) * zacetnaVisina)/h;
+=======
+			x = ((e.getX() - 9)* zacetnaSirina)/w;
+			y = ((e.getY() - 63) * zacetnaVisina)/h;
+>>>>>>> origin/master
 			
 			
 			try {
@@ -628,4 +662,8 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 		aliStolpci = false;
 		aliJeSam = false;
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/master

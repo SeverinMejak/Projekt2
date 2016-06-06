@@ -21,12 +21,12 @@ public class Slika extends JPanel {
 		this.slika = null;
 	}
 	
-	// riöe
+	// ri≈°e
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if (this.slika != null) {
-			// Ëe imamo sliko, jo nariöemo
+			// ƒåe imamo sliko, jo nari≈°emo
 			g.drawImage(slika, 0, 0, getWidth(),getHeight(), null);
 			if(Platno.aliJeSam || Platno.aliVrste || Platno.aliStolpci){
 			g.setColor(Color.CYAN);
@@ -36,13 +36,13 @@ public class Slika extends JPanel {
 			}
 		}
 		else {
-			// Ëe slike ni, napiöemo, da je ni
+			// ƒåe slike ni, napi≈°emo, da je ni
 			String napis = "(ni slike)";
 			// nastavimo font za izpis
 			g.setFont(new Font("Helvetica", Font.PLAIN, 30));
-			// dobimo objekt fm, ki zna raËunati vse v zvezi s fontom
+			// dobimo objekt fm, ki zna raƒçunati vse v zvezi s fontom
 			FontMetrics fm = g.getFontMetrics();
-			// objekt fm vpraöamo, kako velik bo naö napis, da ga znamo
+			// objekt fm vpra≈°amo, kako velik bo na≈° napis, da ga znamo
 			// centrirati
 			Rectangle2D r = fm.getStringBounds(napis, g);
 			// naredimo nais, centrirano

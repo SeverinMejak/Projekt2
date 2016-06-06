@@ -35,7 +35,6 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	
 	// Gumbi
 	private JButton openItem;
-	private JButton exitItem;
 	private JButton predvajaj;
 	private JButton predvajaj1;
 	private JButton prekini;
@@ -52,6 +51,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	// Pull down menu
 	JMenuBar menuBar;
 	private JMenuItem openAction;
+	private JMenuItem exitItem;
 	private JMenuItem hitrost;
 	private JMenuItem instr;
 	
@@ -203,8 +203,9 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
         openAction.addActionListener(this);
         fileMenu.add(openAction);
         
-        JMenuItem exitAction = new JMenuItem("Izhod");
-        fileMenu.add(exitAction);
+        exitItem = new JMenuItem("Izhod");
+        exitItem.addActionListener(this);
+        fileMenu.add(exitItem);
         
         hitrost = new JMenuItem("Hitrost");
         hitrost.addActionListener(this);
@@ -401,6 +402,10 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 			  } else if (source == exitItem){
 				  System.exit(0);
 			  }	
+		}
+		
+		else if (source == exitItem){
+			System.exit(0);
 		}
 		
 		//Èe smo izbrali opcijo predvajanja po vrsticah

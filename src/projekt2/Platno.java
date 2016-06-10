@@ -54,6 +54,8 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	private JMenuItem exitItem;
 	private JMenuItem hitrost;
 	private JMenuItem instr;
+	private JMenuItem pomoc;
+
 	
 	private JRadioButtonMenuItem sam;
 	private JRadioButtonMenuItem predvajajVrstice;
@@ -66,6 +68,9 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	//Velikost gumbov
 	int VG = 25;
 
+	private JMenuItem licenca;
+
+	
 	//Zaèetna višina in širina
 	static int zacetnaVisina;
 	static int zacetnaSirina;
@@ -196,8 +201,24 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	    
 	    JMenu fileMenu = new JMenu("Datoteka");
         JMenu editMenu = new JMenu("Nastavitve");
+        
+        JMenu pomagaj = new JMenu("Pomoc");
+        
+        /*pomoc1 = new JButton("Pomoc1");
+        pomoc1.addActionListener(this);
+        menuBar.add(pomoc1);*/
+        
         menuBar.add(fileMenu);
         menuBar.add(editMenu);
+        menuBar.add(pomagaj);
+        
+        pomoc = new JMenuItem("Navodila");
+        pomoc.addActionListener(this);
+        pomagaj.add(pomoc);
+        
+        licenca = new JMenuItem("Licenca");
+        licenca.addActionListener(this);
+        pomagaj.add(licenca);
         
         openAction = new JMenuItem("Odpri");
         openAction.addActionListener(this);
@@ -349,21 +370,17 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	public void podajhitrost(){
 		boolean inputAccepted = false;
 		while(!inputAccepted) {
-			
 			  try {
 					String beseda =   JOptionPane.showInputDialog(null, "Doloèi èas med dvema zvokoma v milisekundah:", "Hitrost", JOptionPane.QUESTION_MESSAGE);
-					if (beseda.equalsIgnoreCase("")){
-						inputAccepted = true;
+					if (beseda == null){
+						break;
 					}
 				    int hitr = Integer.parseInt(beseda);
-				    if (hitr <= 0){
-				    	
-				    } else{
+				    if (hitr > 0){
 				    	inputAccepted = true;
-					      Predvajaj.spremeniHitrost(hitr);
+					    Predvajaj.spremeniHitrost(hitr);
 				    }
-			  } catch(Exception e) {
-				  inputAccepted = true;
+			  } catch(Exception e) {   
 			  }
 		}
 	}
@@ -560,6 +577,61 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 		else if (source == instr){
 			podajInstr();
 		}
+		
+		else if (source == pomoc){
+			JOptionPane.showMessageDialog(null,"Aplikacija za pretvarjanje slik v glasbo\n" + 
+					"\n" + 
+					"Uporabnik bodisi z gumbom bodisi z menujem sproži izbiro datoteke slike.  Ob izboru slike se ta na platnu pojavi,\n" + 
+					"kjer je pred tem  napis, da slike ni. Ob tem se gumb za odpiranje nadomesti z gumbi z možnostmi za predvajanje.\n" + 
+					"Èe je izbran kateri od gumbov, se slika najprej pretvori v seznam s podatki o RGB komponentah posameznih pixlov. \n" + 
+					"Posamezni pixel se predvaja tako, da se intenziteta rdeèe, zelene in modre barve pretvori v visino tona glasbila,\n" + 
+					"ki predstavlja posamezno barvo. Glasbila, ki predstavljajo barve, se lahko izbere v menuju \"Nastavitve\".\n" + 
+					"\n" + 
+					"Gumba s èrtami: sprožita predvajanje tako, da se zaporedoma predvajajo pixli. Hitrost predvajanja je na zaèetku \n" + 
+					"nastavljena na 2000 mili sekund, uporabnik pa lahko hitrost ponastavi v menuju \"Nastavitve\". Predvajanje se \n" + 
+					"zaèasno ustavi s klikom na gumb \"pause\", nadaljuje s \"play\" in prekine s \"stop\". \n" + 
+					"\n" + 
+					"Gumb z navpiènimi èrtami (ali možnost \"Predvajaj zvezno po stolpcih\" v menuju \"Nastavitve\") predvaja pixle od \n" + 
+					"levega zgornjega kota do levega spodnjega kota, nato se pomakne za en pixel v desno in nadaljuje predvajanje \n" + 
+					"navzgor. Tako predvaja do konca slike.\n" + 
+					"\n" + 
+					"Gumb z vodoravnimi èrtami (ali možnost \"Predvajaj po vrsticah\" v menuju \"Nastavitve\") predvaja pixle vsakiè od \n" + 
+					"leve do desne. Prav tako zaène v levem zgornjem kotu.\n" + 
+					"\n" + 
+					"Gumb z oznako \"play\" (ali možnost \"Igraj sam\" v menuju \"Nastavitve\"): preklopi na igranje uporabnika. Uporabnik \n" + 
+					"z miško klika po platnu, aplikacija pa predvaja pixel, ki ga je uporabnik izbral. Igranje uporabnika se prekine \n" + 
+					"sam klikom na gumb \"stop\" ali pa v menuju \"Nastavitve\".\n" + 
+					"\n" + 
+					"Za vsak pixel se na zaslonu prikažeta krog, ki oznaèuje mesto pixla ter škatli s podatki o koordinatah pixla in\n" + 
+					"intenzitetah barv pixla.\n" + 
+					"\n" + 
+					"V menuju \"Datoteka\" je možnost \"Izhod\" za terminiranje aplikacije.", "Navodila" , JOptionPane.PLAIN_MESSAGE);
+		}
+		
+		else if (source == licenca){
+			JOptionPane.showMessageDialog(null,"The MIT License (MIT)\n" + 
+					"\n" + 
+					"Copyright (c) 2016 Severin Mejak and Julija Tominc\n" + 
+					"\n" + 
+					"Permission is hereby granted, free of charge, to any person obtaining a copy\n" + 
+					"of this software and associated documentation files (the \"Software\"), to deal\n" + 
+					"in the Software without restriction, including without limitation the rights\n" + 
+					"to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n" + 
+					"copies of the Software, and to permit persons to whom the Software is\n" + 
+					"furnished to do so, subject to the following conditions:\n" + 
+					"\n" + 
+					"The above copyright notice and this permission notice shall be included in all\n" + 
+					"copies or substantial portions of the Software.\n" + 
+					"\n" + 
+					"THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n" + 
+					"IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n" + 
+					"FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n" + 
+					"AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n" + 
+					"LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n" + 
+					"OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n" + 
+					"SOFTWARE.", "Licenca" , JOptionPane.PLAIN_MESSAGE);
+		}
+		
 	}
 
 	//Èe kliknemo miško
@@ -628,4 +700,5 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 		aliStolpci = false;
 		aliJeSam = false;
 	}
+
 }

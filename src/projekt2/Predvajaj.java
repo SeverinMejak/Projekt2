@@ -59,7 +59,9 @@ public class Predvajaj {
 		stevec = 0;
 		nastavljenaSlika = 0; 
 	}
-
+	
+	
+	//Metoda, ki ustvari vlakno in poklice funkcijo spilaj s parametri, ki doloèajo naèine predvajanja
 	public static  void zaigraj(int n, int w) throws InterruptedException{
 		nacin = n;
 		sirina = w;
@@ -85,7 +87,11 @@ public class Predvajaj {
 		vlakno.start();
 	}
 
+	
+	//Metoda, ki nastavi seznam s podatki o sliki
 	public static  void nastaviSliko(File name, int n) throws InterruptedException, IOException {
+		/*Sliko nastavimo glede na naèin predvajanja. Èe predvajamo po vrsticah ali z igranjem
+		uporabnika, seznama ni potrebno spreminjati. Èe pa je izbran naèin igranja po stolpcih, se mora slika ponovno naložiti.*/ 
 		if (nastavljenaSlika == 0 || !(n%2 + 1 == nastavljenaSlika)){
 			sez = NaloziSliko.pretvori(name, n);
 			if (!(n==1)){
@@ -96,6 +102,8 @@ public class Predvajaj {
 		}
 	}
 
+	
+	//Metoda, ki inicilizira sintisizer in glede na naèin predvajanja predvaja sliko
 	public static  void spilaj(int m) throws InterruptedException, IOException{	
 		Synthesizer synth = null;
 		try {
@@ -118,6 +126,7 @@ public class Predvajaj {
 		mc4[3].programChange(0, 113);
 
 		if(!(m==2)){
+			//Èe ni vkluèen naèin igranja uporabnika, gremo z zanko po sliki
 			int j1 = 0;
 			int k1 = 0;
 			int l1 = 0;
@@ -137,6 +146,7 @@ public class Predvajaj {
 
 				mc4[3].allNotesOff();
 
+				//Èe moramo prekiniti ali zaèasno ustaviti predvajanje
 				if (prekinitev){
 					stevec = 0;
 					break;
@@ -144,6 +154,7 @@ public class Predvajaj {
 					break;
 				}else {
 
+					//Zaigramo ustrezne tone. Èe naj bi instrument ponovno zaigral isti ton, ga zgolj podaljša, zraven pa se zaigra triangel. 
 					j1 =   (i[0]*80)/255 + 20;
 					k1 = (i[1]*80)/255 + 20;
 					l1 = (i[2]*80)/255 + 20;
@@ -203,14 +214,17 @@ public class Predvajaj {
 			}
 
 		} else {
+			//Vkljuèena je možnost igranja uporabnika.
 			a = -1;
 			b = -1;
 			c = -1;
 			while (sam){
+				//Èakamo na informacije o kliku uporabnika
 				Thread.sleep(10);
 				if (a== -1 || b == -1 || c==-1){
-
+					//Ni bilo klika	
 				} else {
+					//Informacije o kliku, posredovane prek metode "poklikaj"
 					mc[4].allNotesOff();
 					mc2[5].allNotesOff();
 					mc3[6].allNotesOff();
@@ -227,10 +241,10 @@ public class Predvajaj {
 				}
 			}
 		}
-
 		synth.close();
 	}
 
+	//Metoda, ki prekine igranje
 	public static  void prekini() {
 		prekinitev = true;
 		play = !pavza;
@@ -238,6 +252,7 @@ public class Predvajaj {
 		pavza = false;
 	}
 
+	//Metoda, ki zaèasno prekine igranje
 	public static void pavza() {
 		pavza = true;
 		play = false;
@@ -245,6 +260,7 @@ public class Predvajaj {
 		prekinitev = false;
 	}
 
+	//Metoda, ki nadaljuje igranje
 	public static  void play() throws InterruptedException, IOException {
 		play = true;
 		prekinitev = false;
@@ -253,15 +269,20 @@ public class Predvajaj {
 		zaigraj(nacin, sirina);
 	}
 
+	//Metoda, ki izkljuèi ali vkljuèi možnost igranja uporabnika
 	public static void samcat(){
 		sam = !sam;
 		prekinitev = !prekinitev;
 		pavza = false;
 	}
 
+	/*Metoda, ki metodi spilaj podaja informacijo o kliku uporanika, ter Platnu
+	 *  sporoèa nastavitve  podatkov o  koordinatah in barvah,èe je vkljuèena možnost igranja uporabnika
+	 */
 	public static void poklikaj(int x, int y) throws InterruptedException{
 		if (!(nastavljenaSlika == 0)){
 			int p = sirina*y + x;
+			//Zaradi varnosti Platno.nastaviXY poklièemo od tukaj, da prepreèimo možnost, da slika še ni pravilnonastavljena
 			Platno.nastaviXY(x,y);
 			int[] seznam = sez[p];
 			a =   (seznam[0]*80)/255 + 20;
@@ -270,11 +291,13 @@ public class Predvajaj {
 			Platno.nastaviBarve(a, b, c);
 		}
 	}
-
+	
+	//Metoda, ki spremeni hitrost
 	public static void spremeniHitrost(int hitr) {
 		velocity = hitr;
 	}
 
+	//Metoda, ki zamenja instrumente
 	public static void zamenjaj(int i, int k) {
 		if (k == 0){
 			rdeca = i;

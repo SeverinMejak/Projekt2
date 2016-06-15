@@ -106,7 +106,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	    openItem = new JButton();
 	    openItem.addActionListener(this);
 	    try {
-	        Image img = ImageIO.read(getClass().getResource("/Open-icon.png"));
+	        Image img = ImageIO.read(getClass().getResource("/resources/Open-icon.png"));
 	        Image newimg = img.getScaledInstance( VG, VG,  java.awt.Image.SCALE_SMOOTH ) ;
 	        openItem.setIcon(new ImageIcon(newimg));
 	      } catch (IOException ex) {
@@ -117,7 +117,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	    predvajaj = new JButton();
 	    predvajaj.addActionListener(this);
 	    try {
-	        Image img = ImageIO.read(getClass().getResource("/lines.jpg"));
+	        Image img = ImageIO.read(getClass().getResource("/resources/lines.jpg"));
 	        Image newimg = img.getScaledInstance( VG, VG,  java.awt.Image.SCALE_SMOOTH ) ;
 	        predvajaj.setIcon(new ImageIcon(newimg));
 	      } catch (IOException ex) {
@@ -131,7 +131,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	    zaslon.add(predvajaj1);
 	    predvajaj1.setVisible(false);
 	    try {
-	        Image img = ImageIO.read(getClass().getResource("/linesV.jpg"));
+	        Image img = ImageIO.read(getClass().getResource("/resources/linesV.jpg"));
 	        Image newimg = img.getScaledInstance( VG, VG,  java.awt.Image.SCALE_SMOOTH ) ;
 	        predvajaj1.setIcon(new ImageIcon(newimg));
 	      } catch (IOException ex) {
@@ -141,7 +141,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	    predvajajSam = new JButton();
 	    predvajajSam.addActionListener(this);
 	    try {
-	        Image img = ImageIO.read(getClass().getResource("/play.png"));
+	        Image img = ImageIO.read(getClass().getResource("/resources/play.png"));
 	        Image newimg = img.getScaledInstance( VG, VG,  java.awt.Image.SCALE_SMOOTH ) ;
 	        predvajajSam.setIcon(new ImageIcon(newimg));
 	      } catch (IOException ex) {
@@ -155,7 +155,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	    zaslon.add(play);
 	    play.setVisible(false);
 	    try {
-	        Image img = ImageIO.read(getClass().getResource("/play.png"));
+	        Image img = ImageIO.read(getClass().getResource("/resources/play.png"));
 	        Image newimg = img.getScaledInstance( VG, VG,  java.awt.Image.SCALE_SMOOTH ) ;
 	        play.setIcon(new ImageIcon(newimg));
 	      } catch (IOException ex) {
@@ -167,7 +167,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	    zaslon.add(prekini);
 	    prekini.setVisible(false);
 	    try {
-	        Image img = ImageIO.read(getClass().getResource("/stop.png"));
+	        Image img = ImageIO.read(getClass().getResource("/resources/stop.png"));
 	        Image newimg = img.getScaledInstance( VG, VG,  java.awt.Image.SCALE_SMOOTH ) ;
 	        prekini.setIcon(new ImageIcon(newimg));
 	      } catch (IOException ex) {
@@ -179,7 +179,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 	    zaslon.add(pavza);
 	    pavza.setVisible(false);
 	    try {
-	        Image img = ImageIO.read(getClass().getResource("/pause.png"));
+	        Image img = ImageIO.read(getClass().getResource("/resources/pause.png"));
 	        Image newimg = img.getScaledInstance( VG, VG,  java.awt.Image.SCALE_SMOOTH ) ;
 	        pavza.setIcon(new ImageIcon(newimg));
 	      } catch (IOException ex) {
@@ -254,7 +254,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
         //Dodaj sliko
 	    add(zaslon); 
 	    
-	    spremeniIkono("/disk.png");
+	    spremeniIkono("/resources/disk.png");
 	    
 	    //Nastavi parametre za igranje
 	    aliJeSam = false;
@@ -404,7 +404,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 		    		  zacetnaVisina = ImageIO.read(datoteka).getHeight();
 		    		  zacetnaSirina = ImageIO.read(datoteka).getWidth();
 		    		  setSize(zacetnaSirina, zacetnaVisina+(menuBar.getHeight()));
-		    		  spremeniIkono("/Open-icon.png");
+		    		  spremeniIkono("/resources/Open-icon.png");
 		    		  Predvajaj.nastavljenaSlika = 0;
 		    	  } catch (IOException e1) {
 		    		  
@@ -429,7 +429,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 		else if (source == predvajaj || source == predvajajVrstice){
 			aliVrste = !aliVrste;
 			if (aliVrste){
-				spremeniIkono("/play.png");
+				spremeniIkono("/resources/play.png");
 				
 				try {
 					Predvajaj.nastaviSliko(datoteka, 0);
@@ -462,7 +462,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 		} else if (source == predvajaj1 || source == predvajajStolpce){
 			aliStolpci = !aliStolpci;
 			if (aliStolpci){
-				spremeniIkono("/play.png");
+				spremeniIkono("/resources/play.png");
 				
 				try {
 					Predvajaj.nastaviSliko(datoteka, 1);
@@ -498,7 +498,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 		
 		// Èe smo prekinili igranje
 		else if (source == pavza){
-			spremeniIkono("/pause.png");
+			spremeniIkono("/resources/pause.png");
 			Predvajaj.pavza();
 			sam.setVisible(true);
 			nastaviXY(0, 0);
@@ -507,7 +507,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 		
 		// Èe smo izbrali možnost nadaljevanja igranja
 		else if (source == play){
-			spremeniIkono("/play.png");
+			spremeniIkono("/resources/play.png");
 			try {
 				Predvajaj.play();
 				nastaviXY(0, 0);
@@ -545,8 +545,8 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 			nastaviBarve(0, 0, 0);
 			if (aliJeSam){
 				try {
-					spremeniIkono("/play.png");
-			        Image img = ImageIO.read(getClass().getResource("/stop.png"));
+					spremeniIkono("/resources/play.png");
+			        Image img = ImageIO.read(getClass().getResource("/resources/stop.png"));
 			        Image newimg = img.getScaledInstance( VG, VG,  java.awt.Image.SCALE_SMOOTH ) ;
 			        predvajajSam.setIcon(new ImageIcon(newimg));
 			        predvajajVrstice.setEnabled(false);
@@ -556,8 +556,8 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 			} else {
 				try {
 					
-					spremeniIkono("/stop.png");
-				    Image img = ImageIO.read(getClass().getResource("/play.png"));
+					spremeniIkono("/resources/stop.png");
+				    Image img = ImageIO.read(getClass().getResource("/resources/play.png"));
 				    Image newimg = img.getScaledInstance( VG, VG,  java.awt.Image.SCALE_SMOOTH ) ;
 				    predvajajSam.setIcon(new ImageIcon(newimg));
 				    predvajajVrstice.setEnabled(true);
@@ -681,7 +681,7 @@ public class Platno extends JFrame implements ActionListener, MouseListener {
 
 	//Funkcija, ki prekine vse dogajanje
 	public void prekini(){
-		spremeniIkono("/stop.png");
+		spremeniIkono("/resources/stop.png");
 		Predvajaj.prekini();
 		sam.setEnabled(true);
 		predvajaj.setVisible(true);
